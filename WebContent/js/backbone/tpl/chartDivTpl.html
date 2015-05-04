@@ -1,0 +1,35 @@
+<div class="col-md-6 col-sm-6">
+    <div class="portlet box blue-steel">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-bar-chart-o"></i><%= name %>
+            </div>
+            <div class="actions">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default dropdown-toggle" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <%= filterName %> <i class="fa fa-angle-down"></i>
+                    </a>
+                    <div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+                        <label><input type="checkbox"/> <%= filter.one %></label>
+                        <label><input type="checkbox" checked=""/> <%= filter.two %></label>
+                        <label><input type="checkbox"/> <%= filter.three %></label>
+                        <label><input type="checkbox" checked=""/> <%= filter.four %></label>
+                        <label><input type="checkbox"/> <%= filter.five %></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
+                <div id="<%= id %>" style="height:300px">
+                </div>
+            </div>
+            <div class="scroller-footer">
+                <div class="btn-arrow-link pull-right">
+                    <a href="#">See All Records</a>
+                    <i class="icon-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
