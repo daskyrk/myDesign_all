@@ -1,9 +1,9 @@
 /**
- * Created by Jun on 2015/5/4.
+ * Created by Jun on 2015/3/30.
  */
 define(function (require, exports, module) {
 
-    var lineChartView = Backbone.View.extend({
+    var basicBarChartView = Backbone.View.extend({
 
         id: "",
 
@@ -16,6 +16,15 @@ define(function (require, exports, module) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById('chart' + lastId));
 
+            var temp_series = new Array();
+            for(var i=0;i<series_data.length;i++){
+                var seriesItem = {
+                    "name": series_name[i],
+                    "type": "bar",
+                    "data": series_data[i]
+                }
+                temp_series.push(seriesItem);
+            }
             var option = {
                 tooltip: {
                     show: true
@@ -34,19 +43,9 @@ define(function (require, exports, module) {
                         type: 'value'
                     }
                 ],
-                series: [
-                    {
-                        "name": series_name[0],
-                        "type": "line",
-                        "data": series_data[0]
-                    },
-                    {
-                    	"name": series_name[1],
-                    	"type": "line",
-                    	"data": series_data[1]
-                    }
-                ]
+                series: temp_series
             };
+
 
             //为echarts对象加载数据
             myChart.setOption(option);
@@ -64,5 +63,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = lineChartView;
+    module.exports = basicBarChartView;
 });

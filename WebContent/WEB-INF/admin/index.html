@@ -58,7 +58,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="index.html">
-			<img src="./assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+			<img src="./assets/admin/layout/img/logo_my.png" alt="logo" class="logo-default"/>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -375,7 +375,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" class="img-circle" src="http://placehold.it/50x50"/>
 					<span class="username username-hide-on-mobile">
-					Nick </span>
+					Lijun </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-default">
@@ -560,6 +560,27 @@
 						</li>
 					</ul>
 				</li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-diamond"></i>
+                        <span class="title">折线图</span>
+                        <span class="arrow "></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a id="addChart_BasicLine" href="#">
+                                标准</a>
+                        </li>
+                        <li>
+                            <a id="addChart_StackLine" href="#">
+                                堆积</a>
+                        </li>
+                        <li>
+                            <a id="UnequidistantLine" href="#">
+                                <span class="badge badge-roundless badge-danger">new</span>不等距</a>
+                        </li>
+                    </ul>
+                </li>
 				<li>
 					<a href="javascript:;">
 					<i class="icon-diamond"></i>
@@ -572,33 +593,12 @@
 							标准</a>
 						</li>
 						<li>
-							<a id="addChart_NestPie" href="#">
+							<a id="NestPie" href="#">
 							嵌套</a>
 						</li>
 						<li>
 							<a id="addChart_BasicRing" href="#">
 							<span class="badge badge-roundless badge-danger">new</span>标准环形图</a>
-						</li>
-					</ul>
-				</li>
-                <li>
-					<a href="javascript:;">
-					<i class="icon-diamond"></i>
-					<span class="title">折线图</span>
-					<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<li>
-							<a id="addChart_BasicLine" href="#">
-							标准</a>
-						</li>
-						<li>
-							<a id="addChart_StackLine" href="#">
-							堆积</a>
-						</li>
-						<li>
-							<a id="addChart_UnequidistantLine" href="#">
-							<span class="badge badge-roundless badge-danger">new</span>不等距</a>
 						</li>
 					</ul>
 				</li>
@@ -610,11 +610,11 @@
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="#">
+							<a id="addChart_BasicArea" href="#">
 							标准</a>
 						</li>
 						<li>
-							<a href="#">
+							<a id="addChart_StackArea" href="#">
 							堆积</a>
 						</li>
 					</ul>
@@ -1138,7 +1138,7 @@
 				<ul class="page-breadcrumb">
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="index.html">主页</a>
+						<a href="#">主页</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
@@ -1275,41 +1275,6 @@ jQuery(document).ready(function() {
    Index.initChat();
    Index.initMiniCharts();
    Tasks.initDashboardWidget();
-
-    // 基于准备好的dom，初始化echarts图表
-//    var myChart = echarts.init(document.getElementById('standardBar'));
-//    var myChart2 = echarts.init(document.getElementById('standardBar2'));
-
-//    var option = {
-//        tooltip: {
-//            show: true
-//        },
-//        legend: {
-//            data:['销量']
-//        },
-//        xAxis : [
-//            {
-//                type : 'category',
-//                data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-//            }
-//        ],
-//        yAxis : [
-//            {
-//                type : 'value'
-//            }
-//        ],
-//        series : [
-//            {
-//                "name":"销量",
-//                "type":"bar",
-//                "data":[5, 20, 40, 10, 10, 20]
-//            }
-//        ]
-//    };
-
-    // 为echarts对象加载数据
-//    myChart.setOption(option);
-//    myChart2.setOption(option);
 
 	seajs.config({
 	    base: "./js",

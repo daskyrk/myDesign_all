@@ -10,11 +10,11 @@
                         <%= filterName %> <i class="fa fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-                        <label><input type="checkbox"/> <%= filter.one %></label>
-                        <label><input type="checkbox" checked=""/> <%= filter.two %></label>
-                        <label><input type="checkbox"/> <%= filter.three %></label>
-                        <label><input type="checkbox" checked=""/> <%= filter.four %></label>
-                        <label><input type="checkbox"/> <%= filter.five %></label>
+                        <label><input type="checkbox" <%= filter.one.check %>/> <%= filter.one.name %></label>
+                        <label><input type="checkbox" <%= filter.two.check %>/> <%= filter.two.name %></label>
+                        <label><input type="checkbox" <%= filter.three.check %>/> <%= filter.three.name %></label>
+                        <label><input type="checkbox" <%= filter.four.check %>/> <%= filter.four.name %></label>
+                        <label><input type="checkbox" <%= filter.five.check %>/> <%= filter.five.name %></label>
                     </div>
                 </div>
             </div>

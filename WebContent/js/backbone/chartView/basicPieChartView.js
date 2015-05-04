@@ -3,7 +3,7 @@
  */
 define(function (require, exports, module) {
 
-    var stackBarChartView = Backbone.View.extend({
+    var basicPieChartView = Backbone.View.extend({
 
         id: "",
 
@@ -17,54 +17,53 @@ define(function (require, exports, module) {
             var myChart = echarts.init(document.getElementById('chart' + lastId));
 
             var option = {
+                title : {
+                    text: '某站点用户访问来源',
+                    subtext: '纯属虚构',
+                    x:'center'
+                },
                 tooltip : {
-                    trigger: 'axis',
-                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
-                    data:series_name//['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','百度','谷歌','必应','其他']
+                    orient : 'vertical',
+                    x : 'left',
+                    data: xAxis_data
                 },
                 toolbox: {
                     show : true,
                     orient: 'vertical',
-                    x: 'right',
-                    y: 'center',
                     feature : {
                         mark : {show: true},
                         dataView : {show: true, readOnly: false},
-                        magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                        magicType : {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
                         restore : {show: true},
                         saveAsImage : {show: true}
                     }
                 },
                 calculable : true,
-                xAxis : [
-                    {
-                        type : 'category',
-                        data : xAxis_data//['周一','周二','周三','周四','周五','周六','周日']
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value'
-                    }
-                ],
                 series : [
                     {
-                        "name": series_name[0],
-                        "type": "bar",
-                        "data": series_data[0]
-                    },
-                    {
-                    	"name": series_name[1],
-                    	"type": "bar",
-                    	"data": series_data[1]
+                        name:series_name,
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data: series_data
                     }
                 ]
             };
-
 
             //为echarts对象加载数据
             myChart.setOption(option);
@@ -82,5 +81,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = stackBarChartView;
+    module.exports = basicPieChartView;
 });
