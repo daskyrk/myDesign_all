@@ -12,9 +12,9 @@ define(function (require, exports, module) {
         },
 
         render: function (xAxis_data,series_name,series_data) {
-            var lastId = $("div[id^='chart']").length;
+            var lastId = $("div.chartArea:last").attr("id");
             //基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('chart' + lastId));
+            var myChart = echarts.init(document.getElementById(lastId));
 
             var option = {
                 tooltip : {

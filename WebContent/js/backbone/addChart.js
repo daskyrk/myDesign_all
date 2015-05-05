@@ -68,12 +68,7 @@ define(function (require, exports, module) {
      */
     function appendChartArea() {
         var chartView = initChart();
-        if ($(".row:last > div").length < 2) {//如果最后一行图表数不到2个则追加图表
-            $(".row:last").append(chartView.render().$el);
-        } else {//最后一行图表数达到2个则追加一行再追加图表
-            $(".page-content").append("<div class='row'></div>");
-            $(".row:last").append(chartView.render().$el);
-        }
+        $(".page-content").append(chartView.render().$el);
         chartSum++;
         return chartType;
     }
