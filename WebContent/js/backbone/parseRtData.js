@@ -41,7 +41,7 @@ define(function (require, exports, module) {
             series_name[i - 1] = data[i][0];
             series_data[i - 1] = data[i].slice(1);
         }
-        var chartType = AddChart.appendChartArea();//追加一个图标区域
+        var chartType = AddChart.appendChartArea();//追加一个图表区域
         switch (chartType) {
             //*******************************基本柱状图*******************************
             case 'BasicBar':

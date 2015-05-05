@@ -116,3 +116,11 @@ Change Quick Sidebar Width
 		min-height: 34px;
 	}
 }
+
+.chartArea{
+    height: 300px;
+}
+
+.float-left{
+    float: left;
+}

@@ -19,8 +19,32 @@ define(function (require, exports, module) {
             resizeAllCharts();
         });
 
+        $(document).on("click",".reload",function(){
+
+        });
+
+        $(document).on("click",".remove",function(){
+            var divList = $("div.float-left");
+            for(var i=0;i<divList.length;i++){
+                if(divList[i].children.length<1){
+                    divList[i].remove();
+                }
+            }
+        });
+
+        //点击某个图表的全屏按钮时重新缩放所有图表
+        $(document).on("click",".fullscreen",function(){
+            if($(this).parents(".portlet").hasClass("portlet-fullscreen")){
+                $("div[id^=chart]").height(600);
+            }else{
+                $("div[id^=chart]").height(300);
+            }
+            resizeAllCharts();
+        });
+
         //缩放所有图表
         function resizeAllCharts() {
+            $("div.portlet-fullscreen div[id^=chart]").height($(window).height()*0.9);
             setTimeout(function () {
                 for (var i = 0; i < window.charts.length; i++) {
                     window.charts[i].resize();
