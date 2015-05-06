@@ -1,5 +1,5 @@
-<div id="maskDiv" class="mask">
-	<button id="closeMask" type="button" class="mask-close">Close</button>
+<div class="maskDiv">
+	<!--<button id="closeMask" type="button" class="mask-close">Close</button>-->
 	<!-- <nav>
 		<ul>
 			<li></li>
@@ -10,20 +10,21 @@
 		</ul>
 	</nav> -->
 	<!-- Fine Uploader DOM Element -->
-	<div id="thumbnail-fine-uploader"></div>
+	<div id="<%= uploaderDomId %>"></div>
 	<!-- Fine Uploader template -->
 	<script type="text/template" id="qq-simple-thumbnails-template">
 	  <div class="qq-uploader-selector qq-uploader ">
-	    <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone="">
+	    <div class="qq-upload-drop-area-selector qq-upload-drop-area">
 	        <span>
-	            将文件拖拽至此
+	            或将Excel文件拖拽至此
 	        </span>
+            <div class="qq-upload-button-selector qq-upload-button">
+                <div>
+                    文件上传
+                </div>
+            </div>
 	    </div>
-	    <div class="qq-upload-button-selector qq-upload-button">
-	        <div>
-	            文件上传
-	        </div>
-	    </div>
+
 	    <span class="qq-drop-processing-selector qq-drop-processing">
 	        <span>
 	            Processing dropped files...

@@ -11,10 +11,9 @@ define(function (require, exports, module) {
             //this.id = "barChart" + $("div[id^='chart']").length;
         },
 
-        render: function (xAxis_data,series_name,series_data) {
-            var lastId = $("div.chartArea:last").attr("id");
+        render: function (chartAreaId, xAxis_data,series_name,series_data) {
             //基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById(lastId));
+            var myChart = echarts.init(document.getElementById(chartAreaId));
 
             var temp_series = new Array();
             for(var i=0;i<series_data.length;i++){

@@ -33,7 +33,7 @@ define(function (require, exports, module) {
      * 解析返回的json数据
      * 参数为返回的json
      */
-    function parseRtData(data) {
+    function parseRtData(chartArea,data) {
         var xAxis_data, series_name = [], series_data = [];
 
         xAxis_data = data[0].slice(1);
@@ -41,19 +41,18 @@ define(function (require, exports, module) {
             series_name[i - 1] = data[i][0];
             series_data[i - 1] = data[i].slice(1);
         }
-        var chartType = AddChart.appendChartArea();//追加一个图表区域
-        switch (chartType) {
+        switch (chartArea.type) {
             //*******************************基本柱状图*******************************
             case 'BasicBar':
-                new BasicBarChartView().render(xAxis_data, series_name, series_data);
+                new BasicBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积柱状图*******************************
             case 'StackBar':
-                new StackBarChartView().render(xAxis_data, series_name, series_data);
+                new StackBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************温度计柱状图*******************************
             case 'ThermometerBar':
-                new ThermometerBarChartView().render(xAxis_data, series_name, series_data);
+                new ThermometerBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************标准饼图*******************************
             case 'BasicPie':
@@ -71,7 +70,7 @@ define(function (require, exports, module) {
                     series_data.push(pieItem);
                 }
 
-                new BasicPieChartView().render(xAxis_data, series_name, series_data);
+                new BasicPieChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************嵌套饼图*******************************
             case 'NestPie':
@@ -89,7 +88,7 @@ define(function (require, exports, module) {
                     series_data.push(pieItem);
                 }
 
-                new NestPieChartView().render(xAxis_data, series_name, series_data);
+                new NestPieChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************标准环形图*******************************
             case 'BasicRing':
@@ -107,33 +106,33 @@ define(function (require, exports, module) {
                     series_data.push(pieItem);
                 }
 
-                new BasicRingChartView().render(xAxis_data, series_name, series_data);
+                new BasicRingChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************标准折线图*******************************
             case 'BasicLine':
-                new BasicLineChartView().render(xAxis_data, series_name, series_data);
+                new BasicLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积折线图*******************************
             case 'StackLine':
-                new StackLineChartView().render(xAxis_data, series_name, series_data);
+                new StackLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************标准面积图*******************************
             case 'BasicArea':
-                new BasicAreaChartView().render(xAxis_data, series_name, series_data);
+                new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积面积图*******************************
             case 'StackArea':
-                new StackAreaChartView().render(xAxis_data, series_name, series_data);
+                new StackAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************标准雷达图*******************************
             case 'BasicRadar':
 
-                new BasicRadarChartView().render(xAxis_data, series_name, series_data);
+                new BasicRadarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************标准散点图*******************************
             case 'BasicScatter':
 
-                new BasicScatterChartView().render(xAxis_data, series_name, series_data);
+                new BasicScatterChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
         }
 

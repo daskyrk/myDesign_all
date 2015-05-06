@@ -60,20 +60,20 @@ Change Quick Sidebar Width
 */
 
 /* mask style */
-.mask {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
+.maskDiv {
+	position: absolute;
+	width: 94%;
+	height: 83%;
+	top: 41px;
+	left: 15px;
 	z-index:9999;
-	background: rgba(153,204,51,0.9);
+	background: rgba(179,179,179,1);
 }
 
 /* mask closing cross */
-.mask .mask-close {
-	width: 80px;
-	height: 80px;
+.maskDiv .mask-close {
+	width: 37px;
+	height: 37px;
 	position: absolute;
 	right: 20px;
 	top: 20px;
@@ -108,11 +108,11 @@ Change Quick Sidebar Width
 }
 
 @media screen and (max-height: 30.5em) {
-	.mask nav {
+	.maskDiv nav {
 		height: 70%;
 		font-size: 34px;
 	}
-	.mask ul li {
+	.maskDiv ul li {
 		min-height: 34px;
 	}
 }

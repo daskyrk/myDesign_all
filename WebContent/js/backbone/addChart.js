@@ -8,6 +8,7 @@ define(function (require, exports, module) {
     var ShowMask = require("./showMask");
 
     var chartSum = $("div[id^='chart']").length;// 图表总数
+    var maskDivSum = $("div.maskDiv").length;//上传区域总数
     var chartType = "";
 
     /*
@@ -18,8 +19,14 @@ define(function (require, exports, module) {
         $("a[id^=addChart_]").click(function () {
             // 获得ID里图表部分的名字
             chartType = this.id.substr(9);
-            var mask = new ShowMask(chartType);
-
+            //new ShowMask(chartType);
+            //追加图表区域
+            var chartArea = appendChartArea();
+            //如果区域里没有图表，说明未上传数据，显示图表类型提示
+            var uploadArea = ShowMask.getUploadArea(chartType);
+            chartArea.view.$(".chartArea").append(uploadArea);
+            var uploaderDomId = "uploader" + (maskDivSum + 1);
+            ShowMask.createUploader(chartArea,uploaderDomId,"uploaderTemplate"+chartSum);
         });
     };
 
@@ -70,7 +77,12 @@ define(function (require, exports, module) {
         var chartView = initChart();
         $("#sortable_portlets").append(chartView.render().$el);
         chartSum++;
-        return chartType;
+        var newChartArea = {
+            id:chartView.model.get("id"),
+            view:chartView,
+            type:chartType
+        }
+        return newChartArea;
     }
 
 
