@@ -9,7 +9,7 @@ define(function (require, exports, module) {
 
         id: "",
 
-        className:"col-md-6 col-sm-6 float-left",
+        className:"col-md-6 col-sm-6 sortable float-left",
 
         init: function () {
 

@@ -2317,8 +2317,8 @@ Page footer
   clear: both;
 }
 .page-footer .page-footer-inner {
-  float: left;
-  display: inline-block;
+  /* float: left; */
+  /* display: inline-block; */
 }
 .page-footer-fixed.page-footer-fixed-mobile .page-footer {
   position: fixed;

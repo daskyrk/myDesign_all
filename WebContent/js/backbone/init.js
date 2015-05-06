@@ -2,11 +2,17 @@
  * Created by Jun on 2015/3/30.
  */
 define(function (require, exports, module) {
+    $(function() {
+        $( "#sortable" ).sortable();
+        $( "#sortable" ).disableSelection();
+    });
+
     $(document).ready(function () {
         //新增图表区域
         var addChartJs = require("./addChart");
         addChartJs.addChart();
-        
+
+        PortletDraggable.init();
         /***********************图表动态缩放************************/
         //将所有图表实例对象放入全局空间
         window.charts = [];
@@ -19,10 +25,12 @@ define(function (require, exports, module) {
             resizeAllCharts();
         });
 
+        //点击某个图表的刷新按钮时
         $(document).on("click",".reload",function(){
 
         });
 
+        //点击某个图表的删除按钮时，因为remove类已添加移除div的响应，所以只要移除空div外壳即可
         $(document).on("click",".remove",function(){
             var divList = $("div.float-left");
             for(var i=0;i<divList.length;i++){

@@ -68,7 +68,7 @@ define(function (require, exports, module) {
      */
     function appendChartArea() {
         var chartView = initChart();
-        $(".page-content").append(chartView.render().$el);
+        $("#sortable_portlets").append(chartView.render().$el);
         chartSum++;
         return chartType;
     }

@@ -736,7 +736,10 @@ Quick Sidebar Content
 Page Footer 
 ******/
 .page-footer .page-footer-inner {
+  width: 200px;
   color: #a3a3a3;
+  margin: 0 auto;
+
 }
 .page-footer-fixed .page-footer {
   background-color: #2b2b2b;
