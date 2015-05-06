@@ -3,7 +3,7 @@
  */
 define(function (require, exports, module) {
 
-    var basicBarChartView = Backbone.View.extend({
+    var basicHorizonBarChartView = Backbone.View.extend({
 
         id: "",
 
@@ -11,12 +11,12 @@ define(function (require, exports, module) {
             //this.id = "barChart" + $("div[id^='chart']").length;
         },
 
-        render: function (chartAreaId, xAxis_data,series_name,series_data) {
+        render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId));
 
             var temp_series = new Array();
-            for(var i=0;i<series_data.length;i++){
+            for (var i = 0; i < series_data.length; i++) {
                 var seriesItem = {
                     "name": series_name[i],
                     "type": "bar",
@@ -25,32 +25,38 @@ define(function (require, exports, module) {
                 temp_series.push(seriesItem);
             }
             var option = {
+                title: {
+                    text: '世界人口总量',
+                    subtext: '数据来自网络'
+                },
                 tooltip: {
-                    show: true
+                    trigger: 'axis'
                 },
                 legend: {
                     data: series_name
                 },
                 toolbox: {
-                    show : true,
+                    show: true,
                     orient: 'vertical',
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
                         magicType: {show: true, type: ['line', 'bar']},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
+                        restore: {show: true},
+                        saveAsImage: {show: true}
                     }
                 },
+                calculable: true,
                 xAxis: [
                     {
-                        type: 'category',
-                        data: xAxis_data
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
                     }
                 ],
                 yAxis: [
                     {
-                        type: 'value'
+                        type: 'category',
+                        data: xAxis_data
                     }
                 ],
                 series: temp_series
@@ -73,5 +79,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = basicBarChartView;
+    module.exports = basicHorizonBarChartView;
 });

@@ -124,3 +124,13 @@ Change Quick Sidebar Width
 .float-left{
     float: left;
 }
+
+.qq-upload-drop-area-selector span{
+    font-weight: bold;
+}
+
+.chartIcon{
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+}

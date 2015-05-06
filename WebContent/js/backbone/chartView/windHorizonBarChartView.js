@@ -3,7 +3,7 @@
  */
 define(function (require, exports, module) {
 
-    var basicBarChartView = Backbone.View.extend({
+    var windHorizonBarChartView = Backbone.View.extend({
 
         id: "",
 
@@ -11,25 +11,30 @@ define(function (require, exports, module) {
             //this.id = "barChart" + $("div[id^='chart']").length;
         },
 
-        render: function (chartAreaId, xAxis_data,series_name,series_data) {
+        render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId));
 
             var temp_series = new Array();
-            for(var i=0;i<series_data.length;i++){
+            for (var i = 0; i < series_data.length; i++) {
                 var seriesItem = {
-                    "name": series_name[i],
-                    "type": "bar",
-                    "data": series_data[i]
+                    name: series_name[i],
+                    type: "bar",
+                    stack: '总量',
+                    itemStyle : { normal: {label : {show: true, position: 'inside'}}},
+                    data: series_data[i]
                 }
                 temp_series.push(seriesItem);
             }
             var option = {
-                tooltip: {
-                    show: true
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
                 },
                 legend: {
-                    data: series_name
+                    data:series_name
                 },
                 toolbox: {
                     show : true,
@@ -37,23 +42,25 @@ define(function (require, exports, module) {
                     feature : {
                         mark : {show: true},
                         dataView : {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
+                        magicType : {show: true, type: ['line', 'bar']},
                         restore : {show: true},
                         saveAsImage : {show: true}
                     }
                 },
-                xAxis: [
+                calculable : true,
+                xAxis : [
                     {
-                        type: 'category',
-                        data: xAxis_data
+                        type : 'value'
                     }
                 ],
-                yAxis: [
+                yAxis : [
                     {
-                        type: 'value'
+                        type : 'category',
+                        axisTick : {show: false},
+                        data : xAxis_data
                     }
                 ],
-                series: temp_series
+                series : temp_series
             };
 
 
@@ -73,5 +80,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = basicBarChartView;
+    module.exports = windHorizonBarChartView;
 });

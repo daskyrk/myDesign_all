@@ -3,7 +3,7 @@
  */
 define(function (require, exports, module) {
 
-    var basicRadarChartView = Backbone.View.extend({
+    var fillRadarChartView = Backbone.View.extend({
 
         id: "",
 
@@ -17,17 +17,15 @@ define(function (require, exports, module) {
 
             var option = {
                 title: {
-                    text: '预算 vs 开销（Budget vs spending）',
-                    subtext: '纯属虚构'
+                    text: '罗纳尔多 vs 舍普琴科',
+                    subtext: '完全实况球员数据'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    orient: 'vertical',
-                    x: 'right',
-                    y: 'bottom',
-                    data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+                    x: 'center',
+                    data: ['罗纳尔多', '舍普琴科']
                 },
                 toolbox: {
                     show: true,
@@ -38,31 +36,39 @@ define(function (require, exports, module) {
                         saveAsImage: {show: true}
                     }
                 },
+                calculable: true,
                 polar: [
                     {
                         indicator: [
-                            {text: '销售（sales）', max: 6000},
-                            {text: '管理（Administration）', max: 16000},
-                            {text: '信息技术（Information Techology）', max: 30000},
-                            {text: '客服（Customer Support）', max: 38000},
-                            {text: '研发（Development）', max: 52000},
-                            {text: '市场（Marketing）', max: 25000}
-                        ]
+                            {text: '进攻', max: 100},
+                            {text: '防守', max: 100},
+                            {text: '体能', max: 100},
+                            {text: '速度', max: 100},
+                            {text: '力量', max: 100},
+                            {text: '技巧', max: 100}
+                        ],
+                        radius: 130
                     }
                 ],
-                calculable: true,
                 series: [
                     {
-                        name: '预算 vs 开销（Budget vs spending）',
+                        name: '完全实况球员数据',
                         type: 'radar',
+                        itemStyle: {
+                            normal: {
+                                areaStyle: {
+                                    type: 'default'
+                                }
+                            }
+                        },
                         data: [
                             {
-                                value: [4300, 10000, 28000, 35000, 50000, 19000],
-                                name: '预算分配（Allocated Budget）'
+                                value: [97, 42, 88, 94, 90, 86],
+                                name: '舍普琴科'
                             },
                             {
-                                value: [5000, 14000, 28000, 31000, 42000, 21000],
-                                name: '实际开销（Actual Spending）'
+                                value: [97, 32, 74, 95, 88, 92],
+                                name: '罗纳尔多'
                             }
                         ]
                     }
@@ -86,5 +92,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = basicRadarChartView;
+    module.exports = fillRadarChartView;
 });

@@ -32,8 +32,7 @@
 	margin: 0 auto;
 	text-align: center;
 	background: #800;
-	border-bottom: 1px solid #DDD;
-	color: #FFF
+	color: #FFF;
 }
 
 .qq-upload-button-hover {
@@ -45,7 +44,6 @@
 }
 
 .qq-upload-drop-area,.qq-upload-extra-drop-area {
-	/* position: absolute; */
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -54,6 +52,7 @@
 	z-index: 2;
 	background: rgba(60,60,60,0.1);
 	text-align: center
+	
 }
 
 .qq-upload-drop-area span {

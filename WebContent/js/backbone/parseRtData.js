@@ -10,9 +10,17 @@ define(function (require, exports, module) {
     var StackBarChartView = require("./chartView/stackBarChartView");
     var ThermometerBarChartView = require("./chartView/thermometerBarChartView");
 
+    /************************条形图************************/
+    var BasicHorizonBarChartView = require("./chartView/basicHorizonBarChartView");
+    var StackHorizonBarChartView = require("./chartView/stackHorizonBarChartView");
+    var WindHorizonBarChartView = require("./chartView/windHorizonBarChartView");
+    var MultiHorizonBarChartView = require("./chartView/multiHorizonBarChartView");
+    var UnEqualHorizonBarChartView = require("./chartView/unEqualHorizonBarChartView");
+
     /************************折线图************************/
     var BasicLineChartView = require("./chartView/basicLineChartView");
     var StackLineChartView = require("./chartView/stackLineChartView");
+    var UnEqualLineChartView = require("./chartView/unEqualLineChartView");
 
     /************************面积图************************/
     var BasicAreaChartView = require("./chartView/basicAreaChartView");
@@ -25,6 +33,7 @@ define(function (require, exports, module) {
 
     /************************雷达图************************/
     var BasicRadarChartView = require("./chartView/basicRadarChartView");
+    var FillRadarChartView = require("./chartView/fillRadarChartView");
 
     /************************散点图************************/
     var BasicScatterChartView = require("./chartView/basicScatterChartView");
@@ -42,7 +51,7 @@ define(function (require, exports, module) {
             series_data[i - 1] = data[i].slice(1);
         }
         switch (chartArea.type) {
-            //*******************************基本柱状图*******************************
+            //*******************************标准柱状图*******************************
             case 'BasicBar':
                 new BasicBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
@@ -54,6 +63,44 @@ define(function (require, exports, module) {
             case 'ThermometerBar':
                 new ThermometerBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
+
+
+            //*******************************标准条形图*******************************
+            case 'BasicHorizonBar':
+                new BasicHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************堆积条形图*******************************
+            case 'StackHorizonBar':
+                new StackHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************旋风条形图*******************************
+            case 'WindHorizonBar':
+                new WindHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************多维条形图*******************************
+            case 'MultiHorizonBar':
+                new MultiHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************不等距条形图*******************************
+            case 'UnEqualHorizonBar':
+                new UnEqualHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+
+
+            //*******************************标准折线图*******************************
+            case 'BasicLine':
+                new BasicLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************堆积折线图*******************************
+            case 'StackLine':
+                new StackLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************不等距折线图*******************************
+            case 'UnEqualLine':
+                new UnEqualLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+
+
             //*******************************标准饼图*******************************
             case 'BasicPie':
                 series_data = [];
@@ -108,14 +155,8 @@ define(function (require, exports, module) {
 
                 new BasicRingChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
-            //*******************************标准折线图*******************************
-            case 'BasicLine':
-                new BasicLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
-                break;
-            //*******************************堆积折线图*******************************
-            case 'StackLine':
-                new StackLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
-                break;
+
+
             //*******************************标准面积图*******************************
             case 'BasicArea':
                 new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
@@ -124,11 +165,18 @@ define(function (require, exports, module) {
             case 'StackArea':
                 new StackAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
+
+
             //*******************************标准雷达图*******************************
             case 'BasicRadar':
-
                 new BasicRadarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
+            //*******************************填充雷达图*******************************
+            case 'FillRadar':
+                new FillRadarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+
+
             //*******************************标准散点图*******************************
             case 'BasicScatter':
 
