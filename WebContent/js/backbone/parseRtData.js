@@ -42,7 +42,7 @@ define(function (require, exports, module) {
      * 解析返回的json数据
      * 参数为返回的json
      */
-    function parseRtData(chartArea,data) {
+    function parseRtData(chartArea, data) {
         var xAxis_data, series_name = [], series_data = [];
 
         xAxis_data = data[0].slice(1);

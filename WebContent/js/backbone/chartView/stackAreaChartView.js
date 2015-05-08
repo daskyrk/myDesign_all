@@ -11,7 +11,7 @@ define(function (require, exports, module) {
             //this.id = "barChart" + $("div[id^='chart']").length;
         },
 
-        render: function (chartAreaId, xAxis_data,series_name,series_data) {
+        render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId));
 

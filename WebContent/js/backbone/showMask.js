@@ -5,28 +5,15 @@ define(function (require, exports, module) {
     var MaskModel = require("./model/maskModel");
     var MaskView = require("./view/maskView");
 
-    var maskDivSum = $("div.maskDiv").length;//上传区域总数
-
     /*
-     * 显示上传遮罩层 参数为图表类型
+     * 获得一个新上传区域
      */
-    function showMask(chartType) {
-        var maskModel = new MaskModel();
-        maskModel.set({
-            "uploaderDomId": "uploader" + (maskDivSum + 1)
-        });
-        var maskView = new MaskView({
-            model: maskModel
-        });
-        $("body").append(maskView.render().$el);
-        createUploader(chartType);
-    };
-
     function getUploadArea(chartType) {
+        var maskDivSum = $("div.maskDiv").length;//上传区域总数
         var maskModel = new MaskModel();
         maskModel.set({
             "uploaderDomId": "uploader" + (maskDivSum + 1),
-            "uploaderTemplateId" : "uploaderTemplate"+maskDivSum
+            "uploaderTemplateId": "uploaderTemplate" + maskDivSum
         });
         var maskView = new MaskView({
             model: maskModel
@@ -38,12 +25,12 @@ define(function (require, exports, module) {
     /*
      * 创建上传实例 参数为上传文件区域id
      */
-    function createUploader(chartArea,uploaderDomId,uploaderTemplateId) {//FIXME：uploaderTemplateId暂时没用，script的id有重复现象
-        var thumbnailuploader = new qq.FineUploader({
+    function createUploader(chartArea, uploaderDomId, uploaderTemplateId) {
+        new qq.FineUploader({
             element: document.getElementById(uploaderDomId),
-            template: "qq-simple-thumbnails-template",
+            template: uploaderTemplateId,
             validation: {
-                allowedExtensions: ['xls'],
+                allowedExtensions: ['xls', 'xlsx'],
                 sizeLimit: 1048576 // 100 M = 100 * 1024 bytes*1024
             },
             request: {
@@ -58,13 +45,11 @@ define(function (require, exports, module) {
                         url: "ChartParse",
                         dataType: "json",
                         data: "filePath=" + responseJSON.uuid,
-                        // timeout : 20000,
-                        // cache : false,
                         beforeSend: function (XMLHttpRequest) {
                         },
                         success: function (data, textStatus) {
                             var parseRtData = require("./parseRtData");
-                            parseRtData.parseRtData(chartArea,data);
+                            parseRtData.parseRtData(chartArea, data);
                             //$("").remove();
                         },
                         // complete : function(XMLHttpRequest, textStatus) {
@@ -74,7 +59,6 @@ define(function (require, exports, module) {
                             alert("ajax失败！");
                         }
                     });
-//					alert(response.getParmeter("filePath"));
                 },
                 onSubmit: function (id, fileName) {
                     // alert("uploading");
@@ -84,7 +68,6 @@ define(function (require, exports, module) {
     }
 
     module.exports = {
-        showMask: showMask,
         getUploadArea: getUploadArea,
         createUploader: createUploader
     };

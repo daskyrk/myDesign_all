@@ -26,49 +26,49 @@ define(function (require, exports, module) {
                 temp_series.push(seriesItem);
             }
             var option = {
-                title : {
+                title: {
                     text: '双数值柱形图',
                     subtext: '纯属虚构'
                 },
-                tooltip : {
+                tooltip: {
                     trigger: 'axis',
-                    axisPointer:{
+                    axisPointer: {
                         show: true,
-                        type : 'cross',
+                        type: 'cross',
                         lineStyle: {
-                            type : 'dashed',
-                            width : 1
+                            type: 'dashed',
+                            width: 1
                         }
                     },
-                    formatter : function (params) {
+                    formatter: function (params) {
                         return params.seriesName + ' : [ '
                             + params.value[0] + ', '
                             + params.value[1] + ' ]';
                     }
                 },
                 legend: {
-                    data:['数据1','数据2']
+                    data: ['数据1', '数据2']
                 },
                 toolbox: {
-                    show : true,
+                    show: true,
                     orient: 'vertical',
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {show: true, type: ['line', 'bar']},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
                     }
                 },
-                calculable : true,
-                xAxis : [
+                calculable: true,
+                xAxis: [
                     {
-                        type : 'value'
+                        type: 'value'
                     }
                 ],
-                yAxis : [
+                yAxis: [
                     {
-                        type : 'value',
+                        type: 'value',
                         axisLine: {
                             lineStyle: {
                                 color: '#dc143c'
@@ -76,41 +76,63 @@ define(function (require, exports, module) {
                         }
                     }
                 ],
-                series : [
+                series: [
                     {
-                        name:'数据1',
-                        type:'bar',
-                        data:[
+                        name: '数据1',
+                        type: 'bar',
+                        data: [
                             [1.5, 10], [5, 7], [8, 8], [12, 6], [11, 12], [16, 9], [14, 6], [17, 4], [19, 9]
                         ],
-                        markPoint : {
-                            data : [
+                        markPoint: {
+                            data: [
                                 // 纵轴，默认
-                                {type : 'max', name: '最大值',symbol: 'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-                                {type : 'min', name: '最小值',symbol: 'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'bottom'}}}},
+                                {
+                                    type: 'max',
+                                    name: '最大值',
+                                    symbol: 'emptyCircle',
+                                    itemStyle: {normal: {color: '#dc143c', label: {position: 'top'}}}
+                                },
+                                {
+                                    type: 'min',
+                                    name: '最小值',
+                                    symbol: 'emptyCircle',
+                                    itemStyle: {normal: {color: '#dc143c', label: {position: 'bottom'}}}
+                                },
                                 // 横轴
-                                {type : 'max', name: '最大值', valueIndex: 0, symbol: 'emptyCircle', itemStyle:{normal:{color:'#1e90ff',label:{position:'right'}}}},
-                                {type : 'min', name: '最小值', valueIndex: 0, symbol: 'emptyCircle', itemStyle:{normal:{color:'#1e90ff',label:{position:'left'}}}}
+                                {
+                                    type: 'max',
+                                    name: '最大值',
+                                    valueIndex: 0,
+                                    symbol: 'emptyCircle',
+                                    itemStyle: {normal: {color: '#1e90ff', label: {position: 'right'}}}
+                                },
+                                {
+                                    type: 'min',
+                                    name: '最小值',
+                                    valueIndex: 0,
+                                    symbol: 'emptyCircle',
+                                    itemStyle: {normal: {color: '#1e90ff', label: {position: 'left'}}}
+                                }
                             ]
                         },
-                        markLine : {
-                            data : [
+                        markLine: {
+                            data: [
                                 // 纵轴，默认
-                                {type : 'max', name: '最大值', itemStyle:{normal:{color:'#dc143c'}}},
-                                {type : 'min', name: '最小值', itemStyle:{normal:{color:'#dc143c'}}},
-                                {type : 'average', name : '平均值', itemStyle:{normal:{color:'#dc143c'}}},
+                                {type: 'max', name: '最大值', itemStyle: {normal: {color: '#dc143c'}}},
+                                {type: 'min', name: '最小值', itemStyle: {normal: {color: '#dc143c'}}},
+                                {type: 'average', name: '平均值', itemStyle: {normal: {color: '#dc143c'}}},
                                 // 横轴
-                                {type : 'max', name: '最大值', valueIndex: 0, itemStyle:{normal:{color:'#1e90ff'}}},
-                                {type : 'min', name: '最小值', valueIndex: 0, itemStyle:{normal:{color:'#1e90ff'}}},
-                                {type : 'average', name : '平均值', valueIndex: 0, itemStyle:{normal:{color:'#1e90ff'}}}
+                                {type: 'max', name: '最大值', valueIndex: 0, itemStyle: {normal: {color: '#1e90ff'}}},
+                                {type: 'min', name: '最小值', valueIndex: 0, itemStyle: {normal: {color: '#1e90ff'}}},
+                                {type: 'average', name: '平均值', valueIndex: 0, itemStyle: {normal: {color: '#1e90ff'}}}
                             ]
                         }
                     },
                     {
-                        name:'数据2',
-                        type:'bar',
-                        barHeight:10,
-                        data:[
+                        name: '数据2',
+                        type: 'bar',
+                        barHeight: 10,
+                        data: [
                             [1, 2], [2, 3], [4, 4], [7, 5], [11, 11], [18, 15]
                         ]
                     }

@@ -11,32 +11,32 @@ define(function (require, exports, module) {
             //this.id = "barChart" + $("div[id^='chart']").length;
         },
 
-        render: function (chartAreaId, xAxis_data,series_name,series_data) {
+        render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId));
 
             var option = {
-                title : {
+                title: {
                     text: '某站点用户访问来源',
                     subtext: '纯属虚构',
-                    x:'center'
+                    x: 'center'
                 },
-                tooltip : {
+                tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 legend: {
-                    orient : 'vertical',
-                    x : 'left',
+                    orient: 'vertical',
+                    x: 'left',
                     data: xAxis_data
                 },
                 toolbox: {
-                    show : true,
+                    show: true,
                     orient: 'vertical',
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {
                             show: true,
                             type: ['pie', 'funnel'],
                             option: {
@@ -48,16 +48,16 @@ define(function (require, exports, module) {
                                 }
                             }
                         },
-                        restore : {show: true},
-                        saveAsImage : {show: true}
+                        restore: {show: true},
+                        saveAsImage: {show: true}
                     }
                 },
-                calculable : true,
-                series : [
+                calculable: true,
+                series: [
                     {
-                        name:series_name,
-                        type:'pie',
-                        radius : '55%',
+                        name: series_name,
+                        type: 'pie',
+                        radius: '55%',
                         center: ['50%', '60%'],
                         data: series_data
                     }

@@ -11,20 +11,20 @@ define(function (require, exports, module) {
             //this.id = "barChart" + $("div[id^='chart']").length;
         },
 
-        render: function (chartAreaId, xAxis_data,series_name,series_data) {
+        render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId));
 
             var option = {
-                title : {
+                title: {
                     text: '温度计式图表',
                     subtext: 'From ExcelHome',
                     sublink: 'http://e.weibo.com/1341556070/AizJXrAEa'
                 },
-                tooltip : {
+                tooltip: {
                     trigger: 'axis',
-                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
 //                    formatter: function (params){
 //                        return params[0].name + '<br/>'
@@ -33,35 +33,35 @@ define(function (require, exports, module) {
 //                    }
                 },
                 legend: {
-                    selectedMode:false,
-                    data:series_name//['Acutal', 'Forecast']
+                    selectedMode: false,
+                    data: series_name//['Acutal', 'Forecast']
                 },
                 toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
                     }
                 },
-                calculable : true,
-                xAxis : [
+                calculable: true,
+                xAxis: [
                     {
-                        type : 'category',
-                        data : xAxis_data//['Cosco','CMA','APL','OOCL','Wanhai','Zim']
+                        type: 'category',
+                        data: xAxis_data//['Cosco','CMA','APL','OOCL','Wanhai','Zim']
                     }
                 ],
-                yAxis : [
+                yAxis: [
                     {
-                        type : 'value',
+                        type: 'value',
                         boundaryGap: [0, 0.1]
                     }
                 ],
-                series : [
+                series: [
                     {
-                        name:series_name[0],
-                        type:'bar',
+                        name: series_name[0],
+                        type: 'bar',
                         stack: 'sum',
                         barCategoryGap: '50%',
                         itemStyle: {
@@ -69,25 +69,25 @@ define(function (require, exports, module) {
                                 color: 'tomato',
                                 barBorderColor: 'tomato',
                                 barBorderWidth: 3,
-                                barBorderRadius:0,
-                                label : {
+                                barBorderRadius: 0,
+                                label: {
                                     show: true, position: 'insideTop'
                                 }
                             }
                         },
-                        data:series_data[0]
+                        data: series_data[0]
                     },
                     {
-                        name:series_name[1],
-                        type:'bar',
+                        name: series_name[1],
+                        type: 'bar',
                         stack: 'sum',
                         itemStyle: {
                             normal: {
                                 color: '#fff',
                                 barBorderColor: 'tomato',
                                 barBorderWidth: 3,
-                                barBorderRadius:0,
-                                label : {
+                                barBorderRadius: 0,
+                                label: {
                                     show: true,
                                     position: 'top',
 //                                    formatter: function (params) {
@@ -103,11 +103,10 @@ define(function (require, exports, module) {
                                 }
                             }
                         },
-                        data:series_data[1]
+                        data: series_data[1]
                     }
                 ]
             };
-
 
 
             //为echarts对象加载数据

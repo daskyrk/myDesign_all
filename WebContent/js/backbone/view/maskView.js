@@ -10,23 +10,23 @@ define(function (require, exports, module) {
         id: "",
 
         init: function () {
-        	
+
         },
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
-        
+
         events: {
 //        	"click #maskDiv": "removeMask",
             "click #closeMask": "removeMask"
         },
-        
-        removeMask: function() {
-        	var maskDiv = $("#maskDiv");
-        	maskDiv.remove();
-        	
+
+        removeMask: function () {
+            var maskDiv = $("#maskDiv");
+            maskDiv.remove();
+
 //        	var Modernizr = require("../../modernizr.custom");
 //        	
 //        	triggerBttn = $("#showMask"),
