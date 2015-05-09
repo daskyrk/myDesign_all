@@ -25,6 +25,7 @@ define(function (require, exports, module) {
             resizeAllCharts();
         });
 
+        /***********************单个图表区域刷新、缩放及关闭响应************************/
         //点击某个图表的刷新按钮时
         $(document).on("click", ".reload", function () {
 
