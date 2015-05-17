@@ -26,7 +26,7 @@ define(function (require, exports, module) {
         });
 
         /***********************单个图表区域刷新、缩放及关闭响应************************/
-        //点击某个图表的刷新按钮时
+            //点击某个图表的刷新按钮时
         $(document).on("click", ".reload", function () {
 
         });
@@ -61,5 +61,42 @@ define(function (require, exports, module) {
             }, 10)
         }
     });
+
+    $("#searchBtn").click(serarchMenu());
+    $("#searchMenu").focus().keydown(function (event) {
+        switch (event.keyCode) {
+            case 13:
+                serarchMenu();
+        }
+    });
+
+    function serarchMenu() {
+        var keyWord = $("#searchMenu").val();
+        var menuList = [];
+        var menus = $(".sub-menu > li");
+        //隐藏所有列表项
+        menus.removeClass("searchResult").parent().hide();
+        if (keyWord == '') {
+            //显示第一个列表项
+            $(".start > ul").slideDown("fast");
+            setTimeout(function () {
+                $(".page-content").height($(".page-sidebar").height());
+            }, 200);
+            return;
+        }
+        for (var i = 0; i < menus.length; i++) {
+            //取得每一个匹配的列表项放入数组
+            menuList.push($(menus[i]).text().trim());
+            //如果匹配
+            if (menuList[i].indexOf(keyWord) > -1) {
+                //增加样式，显示列表项
+                $(menus[i]).addClass("searchResult").parent().slideDown();
+            }
+        }
+        setTimeout(function () {
+            $(".page-content").height($(".page-sidebar").height());
+        }, 400);
+    }
+
 
 });

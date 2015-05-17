@@ -5,6 +5,8 @@
 define(function (require, exports, module) {
     var AddChart = require("./addChart");
 
+
+    var AllChartView = require("./chartView/allChartView");
     /************************柱状图************************/
     var BasicBarChartView = require("./chartView/basicBarChartView");
     var StackBarChartView = require("./chartView/stackBarChartView");
@@ -38,22 +40,96 @@ define(function (require, exports, module) {
     /************************散点图************************/
     var BasicScatterChartView = require("./chartView/basicScatterChartView");
 
+
+    var option = {
+        title: null,
+        timeline: null,
+        toolbox: null,
+        tooltip: {
+            show: true
+        },
+        legend: null,
+        dataRange: null,
+        dataZoom: null,
+        roamController: null,
+        grid: null,
+        xAxis: null,
+        yAxis: null
+    }
+
+
     /*
      * 解析返回的json数据
-     * 参数为返回的json
+     * 参数为目标图表区域和返回的json
      */
     function parseRtData(chartArea, data) {
         var xAxis_data, series_name = [], series_data = [];
-
+        var title, subtitle = '';
         xAxis_data = data[0].slice(1);
         for (var i = 1; i < data.length; i++) {
-            series_name[i - 1] = data[i][0];
-            series_data[i - 1] = data[i].slice(1);
+            if (data[i][0] != '标题') {
+                series_name[i - 1] = data[i][0];
+                series_data[i - 1] = data[i].slice(1);
+            } else {
+                title = data[i][1];
+                data[i][2] == null ? subtitle = '' : subtitle = data[i][2];
+            }
+        }
+
+        var temp_series = new Array();
+        for (var i = 0; i < series_data.length; i++) {
+            var seriesItem = {
+                name: series_name[i],
+                type: "bar",
+                smooth: true,
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data: series_data[i]
+            }
+            temp_series.push(seriesItem);
+        }
+        option = {
+            title: {
+                text: title,
+                subtext: subtitle
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: series_name
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: xAxis_data
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: temp_series
         }
         switch (chartArea.type) {
             //*******************************标准柱状图*******************************
             case 'BasicBar':
-                new BasicBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                var basicBarChart = new AllChartView.basicBarChartView;
+                basicBarChart.render(chartArea.id, option);
+                //new BasicBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积柱状图*******************************
             case 'StackBar':
@@ -159,7 +235,9 @@ define(function (require, exports, module) {
 
             //*******************************标准面积图*******************************
             case 'BasicArea':
-                new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                var basicAreaChart = new AllChartView.basicAreaChartView;
+                basicAreaChart.render(chartArea.id, option);
+                //new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积面积图*******************************
             case 'StackArea':

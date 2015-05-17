@@ -526,7 +526,7 @@ Page Header
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .form-control,
 .page-sidebar .sidebar-search .input-group .form-control {
   background-color: #3d3d3d;
-  color: #5c5c5c;
+  color: #adadad;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .sidebar-search .input-group .form-control::-moz-placeholder,
 .page-sidebar .sidebar-search .input-group .form-control::-moz-placeholder {

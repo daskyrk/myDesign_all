@@ -135,3 +135,7 @@ Change Quick Sidebar Width
     height: 22px;
     margin-right: 4px;
 }
+
+.searchResult {
+    border: 2px solid orange;
+}
