@@ -2,17 +2,12 @@
  * Created by Jun on 2015/3/30.
  */
 define(function (require, exports, module) {
-    $(function () {
-        $("#sortable").sortable();
-        $("#sortable").disableSelection();
-    });
+    var init = $(function () {
 
-    $(document).ready(function () {
         //新增图表区域
         var addChartJs = require("./addChart");
         addChartJs.addChart();
 
-        PortletDraggable.init();
         /***********************图表动态缩放************************/
             //将所有图表实例对象放入全局空间
         window.charts = [];
@@ -51,25 +46,72 @@ define(function (require, exports, module) {
             resizeAllCharts();
         });
 
-        //缩放所有图表
-        function resizeAllCharts() {
-            $("div.portlet-fullscreen div[id^=chart]").height($(window).height() * 0.9);
-            setTimeout(function () {
-                for (var i = 0; i < window.charts.length; i++) {
-                    window.charts[i].resize();
+
+        //左侧菜单搜索按钮点击响应
+        $("#searchBtn").click(function () {
+            serarchMenu();
+        });
+        //菜单搜索按钮回车键响应
+        $("#searchMenu").focus().keydown(function (event) {
+            switch (event.keyCode) {
+                case 13:
+                    serarchMenu();
+            }
+        });
+
+        //图表区域的图表选项点击响应
+        $(document).on("click", ".chart-options", function () {
+            alert("begin");
+            changeOption();
+            alert("end");
+        });
+        //拖拽排序
+        //$("#sortable").sortable();
+        //$("#sortable").disableSelection();
+
+        //PortletDraggable.init();
+
+        //刷新、关闭页面确认
+        //window.onbeforeunload = function() {
+        //    return "请注意：离开后会导致当前数据丢失"
+        //}
+
+        /**
+         * 改变图表属性
+         */
+        function changeOption() {
+            _this = $(this);
+            var chartAreaDom = _this.parents(".portlet-title").next().children(".chartArea");
+            alert(chartAreaDom.id);
+            var charts = window.charts;
+            for (var i = 0; i < charts.length; i++) {
+                if (charts[i].dom.id == chartAreaDom.id) {
+                    alert("this");
+                    var option = charts[i].chart.getOption();
+                    option.toolbox == null;
+                    charts[i].chart.setOption(option);
                 }
-            }, 10)
+            }
         }
+
     });
 
-    $("#searchBtn").click(serarchMenu());
-    $("#searchMenu").focus().keydown(function (event) {
-        switch (event.keyCode) {
-            case 13:
-                serarchMenu();
-        }
-    });
+    /**
+     * 缩放所有图表
+     */
+    function resizeAllCharts() {
+        $("div.portlet-fullscreen div[id^=chart]").height($(window).height() * 0.9);
+        setTimeout(function () {
+            for (var i = 0; i < window.charts.length; i++) {
+                window.charts[i].resize();
+            }
+        }, 10)
+    }
 
+
+    /**
+     * 搜索菜单
+     */
     function serarchMenu() {
         var keyWord = $("#searchMenu").val();
         var menuList = [];
@@ -98,5 +140,22 @@ define(function (require, exports, module) {
         }, 400);
     }
 
+
+    //$(document).on("click", "input.chart-options", function () {
+    //    _this = $(this);
+    //    var chartAreaDom = _this.parents(".portlet-title").next().children(".chartArea");
+    //    alert(chartAreaDom.id);
+    //    var charts = window.charts;
+    //    for (var i = 0; i < charts.length; i++) {
+    //        if (charts[i].dom.id == chartAreaDom.id) {
+    //            alert("this");
+    //            var option = charts[i].chart.getOption();
+    //            option.toolbox == null;
+    //            charts[i].chart.setOption(option);
+    //        }
+    //    }
+    //});
+
+    module.exports = init;
 
 });

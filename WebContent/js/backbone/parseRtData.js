@@ -42,9 +42,22 @@ define(function (require, exports, module) {
 
 
     var option = {
-        title: null,
+        title: {
+            text: "标题",
+            subtext: "副标题"
+        },
         timeline: null,
-        toolbox: null,
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
         tooltip: {
             show: true
         },
@@ -58,13 +71,13 @@ define(function (require, exports, module) {
     }
 
 
-    /*
+    /**
      * 解析返回的json数据
      * 参数为目标图表区域和返回的json
      */
     function parseRtData(chartArea, data) {
         var xAxis_data, series_name = [], series_data = [];
-        var title, subtitle = '';
+        var title = '标题', subtitle = '副标题';
         xAxis_data = data[0].slice(1);
         for (var i = 1; i < data.length; i++) {
             if (data[i][0] != '标题') {
