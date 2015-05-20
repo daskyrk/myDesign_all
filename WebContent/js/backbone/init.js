@@ -4,6 +4,17 @@
 define(function (require, exports, module) {
     var init = $(function () {
 
+        //引导程序
+        $("#intro").click(function () {
+            var Intro = require("./intro");
+            var tour = Intro.introJs();
+            tour.setOption('tooltipPosition', 'auto');
+            tour.setOption('tooltipClass', 'customDefault');
+            tour.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+            tour.start();
+            $("#intro_example").show();
+        });
+
         //封装了点击后新增图表区域的方法
         var AddChartDiv = require("./addChartDiv");
         AddChartDiv.addChartDiv();
@@ -48,7 +59,7 @@ define(function (require, exports, module) {
 
 
         /***********************左侧菜单搜索响应************************/
-        //左侧菜单搜索按钮点击响应
+            //左侧菜单搜索按钮点击响应
         $("#searchBtn").click(function () {
             serarchMenu();
         });

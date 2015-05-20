@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>demo</display-name>
   <servlet>
     <description>This is the description of my J2EE component</description>
@@ -12,13 +13,13 @@
     </init-param>
   </servlet>
   <servlet>
-    <servlet-name>BasicBarParse</servlet-name>
-    <servlet-class>com.lijun.excel.DoParse</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>ChartParse</servlet-name>
     <servlet-class>com.lijun.excel.DoParse</servlet-class>
   </servlet>
+    <servlet>
+        <servlet-name>lock</servlet-name>
+        <jsp-file>/WEB-INF/admin/lock.html</jsp-file>
+    </servlet>
   
   
   <servlet-mapping>
@@ -26,16 +27,16 @@
     <url-pattern>/UploadReceiver</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>BasicBarParse</servlet-name>
-    <url-pattern>/BasicBarParse</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>ChartParse</servlet-name>
     <url-pattern>/ChartParse</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>lock</servlet-name>
+        <url-pattern>/lock</url-pattern>
+        <!-- 地址栏显示的URL -->
+    </servlet-mapping>
   <welcome-file-list>
     <welcome-file>/WEB-INF/admin/index.html</welcome-file>
-    <welcome-file>/fineuploader.jsp</welcome-file>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

@@ -1019,7 +1019,8 @@ Page sidebar
   text-shadow: none;
   font-size: 14px;
 }
-.page-sidebar .page-sidebar-menu > li.active > a > .selected,
+
+.page-sidebar .page-sidebar-menu > li.active > a > .selectedMenu,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .selected {
   display: block;
   background-image: none;

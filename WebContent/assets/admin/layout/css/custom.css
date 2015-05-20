@@ -129,7 +129,7 @@ Change Quick Sidebar Width
     font-weight: bold;
 }
 
-/*Í¼±íÀàÐÍÍ¼±ê*/
+/*Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½*/
 .chartIcon{
     width: 22px;
     height: 22px;
@@ -138,4 +138,20 @@ Change Quick Sidebar Width
 
 .searchResult {
     border: 2px solid orange;
+}
+
+#intro_example {
+    display: none;
+}
+
+.intro_chartArea {
+    height: 300px;
+}
+
+.customDefault {
+    font-size: 14px;
+}
+
+.customDefault .introjs-nextbutton {
+    /*color: red;*/
 }
