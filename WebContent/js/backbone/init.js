@@ -4,9 +4,9 @@
 define(function (require, exports, module) {
     var init = $(function () {
 
-        //新增图表区域
-        var addChartJs = require("./addChart");
-        addChartJs.addChart();
+        //封装了点击后新增图表区域的方法
+        var AddChartDiv = require("./addChartDiv");
+        AddChartDiv.addChartDiv();
 
         /***********************图表动态缩放************************/
             //将所有图表实例对象放入全局空间
@@ -47,6 +47,7 @@ define(function (require, exports, module) {
         });
 
 
+        /***********************左侧菜单搜索响应************************/
         //左侧菜单搜索按钮点击响应
         $("#searchBtn").click(function () {
             serarchMenu();
@@ -59,40 +60,25 @@ define(function (require, exports, module) {
             }
         });
 
-        //图表区域的图表选项点击响应
-        $(document).on("click", ".chart-options", function () {
-            alert("begin");
-            changeOption();
-            alert("end");
+        /********************图表区域的图表选项点击响应********************/
+        $(document).on("click", ".btn-group a", function () {
+            var checks = $(this).next().find(".chart-options");
+            checks.click(function () {
+                var option = [];
+                for (var i = 0; i < checks.length; i++) {
+                    option.push(checks[i].checked);//把checkbox的值放入数组
+                }
+                changeOption(this, option);//改变图表属性
+            })
         });
-        //拖拽排序
-        //$("#sortable").sortable();
-        //$("#sortable").disableSelection();
 
-        //PortletDraggable.init();
+        //拖拽排序
+        PortletDraggable.init();
 
         //刷新、关闭页面确认
-        //window.onbeforeunload = function() {
+        //window.onbeforeunload = function () {
         //    return "请注意：离开后会导致当前数据丢失"
         //}
-
-        /**
-         * 改变图表属性
-         */
-        function changeOption() {
-            _this = $(this);
-            var chartAreaDom = _this.parents(".portlet-title").next().children(".chartArea");
-            alert(chartAreaDom.id);
-            var charts = window.charts;
-            for (var i = 0; i < charts.length; i++) {
-                if (charts[i].dom.id == chartAreaDom.id) {
-                    alert("this");
-                    var option = charts[i].chart.getOption();
-                    option.toolbox == null;
-                    charts[i].chart.setOption(option);
-                }
-            }
-        }
 
     });
 
@@ -140,22 +126,38 @@ define(function (require, exports, module) {
         }, 400);
     }
 
+    /**
+     * 改变图表属性
+     */
+    function changeOption(thisCheck, option) {
+        var chartAreaDomId = $(thisCheck).parents(".portlet-title")//向上找祖先元素--标题
+            .next().find(".chartArea").//找到标题部分后面内容里的绘图区域
+            attr("id");//找到绘图区域的id
+        var charts = window.charts;//获得所有已绘制的图表
+        for (var i = 0; i < charts.length; i++) {
+            if (charts[i].dom.id == chartAreaDomId) {
+                window.charts[i].setOption({
+                        title: {
+                            show: option[0]
+                        },
+                        legend: {
+                            show: option[1]
+                        },
+                        tooltip: {
+                            show: option[2]
+                        },
+                        toolbox: {
+                            show: option[3]
+                        },
+                        animation: option[4]
+                    }
+                );
+            }
+        }
+    }
 
-    //$(document).on("click", "input.chart-options", function () {
-    //    _this = $(this);
-    //    var chartAreaDom = _this.parents(".portlet-title").next().children(".chartArea");
-    //    alert(chartAreaDom.id);
-    //    var charts = window.charts;
-    //    for (var i = 0; i < charts.length; i++) {
-    //        if (charts[i].dom.id == chartAreaDom.id) {
-    //            alert("this");
-    //            var option = charts[i].chart.getOption();
-    //            option.toolbox == null;
-    //            charts[i].chart.setOption(option);
-    //        }
-    //    }
-    //});
 
     module.exports = init;
 
-});
+})
+;

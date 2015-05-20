@@ -3,8 +3,8 @@
  * 响应按钮新增图表区域
  */
 define(function (require, exports, module) {
-    var ChartModel = require("./model/chartDivModel");
-    var ChartView = require("./view/chartDivView");
+    var ChartDivModel = require("./model/chartDivModel");
+    var ChartDivView = require("./view/chartDivView");
     var ShowMask = require("./showMask");
 
     var chartSum = $("div[id^='chart']").length;// 图表总数
@@ -14,22 +14,15 @@ define(function (require, exports, module) {
      * 给按钮添加点击事件
      *
      */
-    var addChart = function () {
+    var addChartDiv = function () {
         $("a[id^=addChart_]").click(function () {
             var maskDivSum = $(".maskDiv").length;//上传区域总数
-            // 获得ID里图表部分的名字
-            chartType = this.id.substr(9);
-            //new ShowMask(chartType);
-            //追加图表区域
-            var chartArea = appendChartArea();
-            //获得一个新的上传区域，即html部分代码
-            var uploadArea = ShowMask.getUploadArea(chartType);
-            //将上传区域追加到新图标区域的内部
-            chartArea.view.$(".chartArea").append(uploadArea);
-            //获得新上传区域的id
-            var uploaderDomId = "uploader" + (maskDivSum + 1);
-            //初始化新上传区域
-            ShowMask.createUploader(chartArea, uploaderDomId, "uploaderTemplate" + maskDivSum);
+            chartType = this.id.substr(9);// 获得ID里图表部分的名字作为图表类型传到后面
+            var chartArea = appendChartDiv();//追加图表区域
+            var uploadArea = ShowMask.getUploadArea();//获得一个新的上传区域，即html部分代码
+            chartArea.view.$(".chartArea").append(uploadArea);//将新上传区域追加到新图表区域的内部
+            var uploaderDomId = "uploader" + (maskDivSum + 1);//获得新上传区域的id
+            ShowMask.createUploader(chartArea, uploaderDomId, "uploaderTemplate" + maskDivSum);//初始化新上传区域
         });
     };
 
@@ -38,8 +31,8 @@ define(function (require, exports, module) {
      *
      */
     function initChart() {
-        var chartModel = new ChartModel();
-        chartModel.set({
+        var chartDivModel = new ChartDivModel();
+        chartDivModel.set({
             "id": "chart" + (chartSum + 1),
             "name": chartType,
             "filterName": "图表属性",
@@ -54,20 +47,20 @@ define(function (require, exports, module) {
                 },
                 "three": {
                     name: "显示提示",
-                    check: ""
+                    check: "checked"
                 },
                 "four": {
                     name: "显示工具箱",
                     check: "checked"
                 },
                 "five": {
-                    name: "显示网格",
+                    name: "显示动画",
                     check: "checked"
                 }
             }
         });
-        var chartView = new ChartView({
-            model: chartModel
+        var chartView = new ChartDivView({
+            model: chartDivModel
         });
         return chartView;
     }
@@ -76,21 +69,20 @@ define(function (require, exports, module) {
      * 追加图表区域
      *
      */
-    function appendChartArea() {
-        var chartView = initChart();
-        $("#sortable_portlets").append(chartView.render().$el);
+    function appendChartDiv() {
+        var chartDivView = initChart();
+        $("#sortable_portlets").append(chartDivView.render().$el);
         chartSum++;
-        var newChartArea = {
-            id: chartView.model.get("id"),
-            view: chartView,
+        var newChartDiv = {
+            id: chartDivView.model.get("id"),
+            view: chartDivView,
             type: chartType
         }
-        return newChartArea;
+        return newChartDiv;
     }
 
 
     module.exports = {
-        addChart: addChart,
-        appendChartArea: appendChartArea
+        addChartDiv: addChartDiv
     };
 });

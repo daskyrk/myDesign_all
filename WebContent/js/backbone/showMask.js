@@ -1,5 +1,6 @@
 /**
- * Created by Jun on 2015/4/9. 显示上传遮罩层
+ * Created by Jun on 2015/4/9.
+ * 显示上传遮罩层、初始化上传区域
  */
 define(function (require, exports, module) {
     var MaskModel = require("./model/maskModel");
@@ -8,7 +9,7 @@ define(function (require, exports, module) {
     /*
      * 获得一个新上传区域
      */
-    function getUploadArea(chartType) {
+    function getUploadArea() {
         var maskDivSum = $("div.maskDiv").length;//上传区域总数
         var maskModel = new MaskModel();
         maskModel.set({
@@ -23,7 +24,8 @@ define(function (require, exports, module) {
     }
 
     /*
-     * 创建上传实例 参数为上传文件区域id
+     * 创建上传实例
+     * 参数为图表区域区域dom，上传区域Domid和scriptId
      */
     function createUploader(chartArea, uploaderDomId, uploaderTemplateId) {
         new qq.FineUploader({
@@ -50,7 +52,6 @@ define(function (require, exports, module) {
                         success: function (data, textStatus) {
                             var parseRtData = require("./parseRtData");
                             parseRtData.parseRtData(chartArea, data);
-                            //$("").remove();
                         },
                         // complete : function(XMLHttpRequest, textStatus) {
                         //

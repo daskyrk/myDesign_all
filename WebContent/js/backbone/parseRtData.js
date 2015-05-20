@@ -1,10 +1,8 @@
 /**
  * Created by Jun on 2015/3/30.
- * 响应按钮新增图表区域
+ * 解析返回的数据并初始化相应的图表
  */
 define(function (require, exports, module) {
-    var AddChart = require("./addChart");
-
 
     var AllChartView = require("./chartView/allChartView");
     /************************柱状图************************/
