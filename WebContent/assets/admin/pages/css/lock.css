@@ -17,6 +17,15 @@ body {
     margin-bottom: 15px;
 }
 
+.page-lock .page-logo h1 {
+    font-size: 34px;
+    color: #fff;
+}
+
+.page-lock .page-logo span {
+    color: red;
+}
+
 .page-lock .page-body {
     width: 100%;
     margin-top: 50px;
