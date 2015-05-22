@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 
         render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById(chartAreaId));
+            var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
             var option = {
                 title: {

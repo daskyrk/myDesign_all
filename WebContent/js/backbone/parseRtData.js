@@ -9,6 +9,8 @@ define(function (require, exports, module) {
     var BasicBarChartView = require("./chartView/basicBarChartView");
     var StackBarChartView = require("./chartView/stackBarChartView");
     var ThermometerBarChartView = require("./chartView/thermometerBarChartView");
+    var PartBarChartView = require("./chartView/partBarChartView");
+    var LadderBarChartView = require("./chartView/ladderBarChartView");
 
     /************************条形图************************/
     var BasicHorizonBarChartView = require("./chartView/basicHorizonBarChartView");
@@ -21,6 +23,7 @@ define(function (require, exports, module) {
     var BasicLineChartView = require("./chartView/basicLineChartView");
     var StackLineChartView = require("./chartView/stackLineChartView");
     var UnEqualLineChartView = require("./chartView/unEqualLineChartView");
+    var TimeAxisLineChartView = require("./chartView/timeAxisLineChartView");
 
     /************************面积图************************/
     var BasicAreaChartView = require("./chartView/basicAreaChartView");
@@ -150,6 +153,14 @@ define(function (require, exports, module) {
             case 'ThermometerBar':
                 new ThermometerBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
+            //*******************************组成柱状图*******************************
+            case 'PartBar':
+                new PartBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************阶梯柱状图*******************************
+            case 'LadderBar':
+                new LadderBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
 
 
             //*******************************标准条形图*******************************
@@ -185,6 +196,10 @@ define(function (require, exports, module) {
             //*******************************不等距折线图*******************************
             case 'UnEqualLine':
                 new UnEqualLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                break;
+            //*******************************时间轴折线图*******************************
+            case 'TimeAxisLine':
+                new TimeAxisLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
 
 
@@ -247,8 +262,8 @@ define(function (require, exports, module) {
             //*******************************标准面积图*******************************
             case 'BasicArea':
                 var basicAreaChart = new AllChartView.basicAreaChartView;
-                basicAreaChart.render(chartArea.id, option);
-                //new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                //basicAreaChart.render(chartArea.id, option);
+                new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积面积图*******************************
             case 'StackArea':
@@ -269,7 +284,7 @@ define(function (require, exports, module) {
             //*******************************标准散点图*******************************
             case 'BasicScatter':
 
-                new BasicScatterChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicScatterChartView().render(chartArea.id, data);
                 break;
         }
 

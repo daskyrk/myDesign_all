@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 
         render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById(chartAreaId));
+            var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
             var option = {
                 title: {
@@ -27,10 +27,11 @@ define(function (require, exports, module) {
                     orient: 'vertical',
                     x: 'right',
                     y: 'bottom',
-                    data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+                    data: series_name
                 },
                 toolbox: {
                     show: true,
+                    orient: 'vertical',
                     feature: {
                         mark: {show: true},
                         dataView: {show: true, readOnly: false},
@@ -57,17 +58,23 @@ define(function (require, exports, module) {
                         type: 'radar',
                         data: [
                             {
-                                value: [4300, 10000, 28000, 35000, 50000, 19000],
-                                name: '预算分配（Allocated Budget）'
+                                value: series_data[0],
+                                name: '预算'
                             },
                             {
-                                value: [5000, 14000, 28000, 31000, 42000, 21000],
-                                name: '实际开销（Actual Spending）'
+                                value: series_data[1],
+                                name: '实际'
                             }
                         ]
                     }
                 ]
             };
+
+
+            for (var i = 0; i < series_data[0].length; i++) {
+                option.polar[0].indicator[i].text = xAxis_data[i];
+                option.polar[0].indicator[i].max = series_data[0][i] > series_data[1][i] ? 1.2 * series_data[0][i] : 1.2 * series_data[1][i];
+            }
 
 
             //为echarts对象加载数据
