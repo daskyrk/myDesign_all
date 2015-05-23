@@ -37,11 +37,37 @@ define(function (require, exports, module) {
 
         });
 
+        Array.prototype.indexOf = function (val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+
         //点击某个图表的删除按钮时，因为remove类已添加移除div的响应，所以只要移除空div外壳即可
         $(document).on("click", ".remove", function () {
             var divList = $("div.float-left");
+            var charts = window.charts;
+            var delChartId = $(this).parents(".portlet-title").next("div").find("div.chartArea").attr("id");
+            //销毁图表元素，并删除在全局对象中的值
+            for (var i = 0; i < charts.length; i++) {
+                if (charts[i].dom.id == delChartId) {
+                    if (charts[i].timer != undefined) {//如果是仪表盘并且有定时器
+                        clearInterval(charts[i].timer);//清除定时器
+                    }
+                    charts[i].dispose();
+                    charts.remove(charts[i]);
+                }
+            }
+            //销毁dom元素
             for (var i = 0; i < divList.length; i++) {
-                if (divList[i].children.length < 1) {
+                if (divList[i].children.length < 1) {//后代为空的
                     divList[i].remove();
                 }
             }

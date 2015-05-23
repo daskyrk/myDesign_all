@@ -5,53 +5,17 @@ define(function (require, exports, module) {
 
     var thermometerBarChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, defaultOption, chartData) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
             var option = {
-                title: {
-                    text: '温度计式图表',
-                    subtext: 'From ExcelHome',
-                    sublink: 'http://e.weibo.com/1341556070/AizJXrAEa'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
-//                    formatter: function (params){
-//                        return params[0].name + '<br/>'
-//                            + params[0].seriesName + ' : ' + params[0].value + '<br/>'
-//                            + params[1].seriesName + ' : ' + (params[1].value + params[0].value);
-//                    }
-                },
-                legend: {
-                    selectedMode: false,
-                    data: series_name//['Acutal', 'Forecast']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: true},
-                        dataView: {show: true, readOnly: false},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
+                title: chartData.title,
+                tooltip: defaultOption.tooltip,
+                legend: defaultOption.legend,
+                toolbox: defaultOption.toolbox,
                 calculable: true,
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: xAxis_data//['Cosco','CMA','APL','OOCL','Wanhai','Zim']
-                    }
-                ],
+                xAxis: defaultOption.xAxis,
                 yAxis: [
                     {
                         type: 'value',
@@ -60,7 +24,7 @@ define(function (require, exports, module) {
                 ],
                 series: [
                     {
-                        name: series_name[0],
+                        name: chartData.series_name[0],
                         type: 'bar',
                         stack: 'sum',
                         barCategoryGap: '50%',
@@ -75,10 +39,10 @@ define(function (require, exports, module) {
                                 }
                             }
                         },
-                        data: series_data[0]
+                        data: chartData.series_data[0]
                     },
                     {
-                        name: series_name[1],
+                        name: chartData.series_name[1],
                         type: 'bar',
                         stack: 'sum',
                         itemStyle: {
@@ -103,24 +67,15 @@ define(function (require, exports, module) {
                                 }
                             }
                         },
-                        data: series_data[1]
+                        data: chartData.series_data[1]
                     }
                 ]
             };
-
 
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
             //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

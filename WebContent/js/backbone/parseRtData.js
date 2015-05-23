@@ -41,35 +41,12 @@ define(function (require, exports, module) {
     /************************散点图************************/
     var BasicScatterChartView = require("./chartView/basicScatterChartView");
 
+    /************************地图************************/
+    var BasicMapChartView = require("./chartView/basicMapChartView");
 
-    var option = {
-        title: {
-            text: "标题",
-            subtext: "副标题"
-        },
-        timeline: null,
-        toolbox: {
-            show: true,
-            orient: 'vertical',
-            feature: {
-                mark: {show: true},
-                dataView: {show: true, readOnly: false},
-                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                restore: {show: true},
-                saveAsImage: {show: true}
-            }
-        },
-        tooltip: {
-            show: true
-        },
-        legend: null,
-        dataRange: null,
-        dataZoom: null,
-        roamController: null,
-        grid: null,
-        xAxis: null,
-        yAxis: null
-    }
+
+    /************************仪表盘图************************/
+    var BasicBoardChartView = require("./chartView/basicBoardChartView");
 
 
     /**
@@ -77,20 +54,21 @@ define(function (require, exports, module) {
      * 参数为目标图表区域和返回的json
      */
     function parseRtData(chartArea, data) {
+        var defaultOption;//默认选项
         var xAxis_data, series_name = [], series_data = [];
-        var title = '标题', subtitle = '副标题';
+        var text = '', subtext = '';
         xAxis_data = data[0].slice(1);
         for (var i = 1; i < data.length; i++) {
             if (data[i][0] != '标题') {
                 series_name[i - 1] = data[i][0];
                 series_data[i - 1] = data[i].slice(1);
             } else {
-                title = data[i][1];
-                data[i][2] == null ? subtitle = '' : subtitle = data[i][2];
+                text = data[i][1];
+                data[i][2] == null ? subtext = '' : subtext = data[i][2];
             }
         }
 
-        var temp_series = new Array();
+        var temp_series = [];
         for (var i = 0; i < series_data.length; i++) {
             var seriesItem = {
                 name: series_name[i],
@@ -98,68 +76,191 @@ define(function (require, exports, module) {
                 smooth: true,
                 itemStyle: {normal: {areaStyle: {type: 'default'}}},
                 data: series_data[i]
-            }
+            };
             temp_series.push(seriesItem);
         }
-        option = {
-            title: {
-                text: title,
-                subtext: subtitle
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: series_name
-            },
-            toolbox: {
-                show: true,
-                orient: 'vertical',
-                feature: {
-                    mark: {show: true},
-                    dataView: {show: true, readOnly: false},
-                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: xAxis_data
-                }
+
+
+        /************************option属性*************************/
+        var title = {
+            show: true,
+            text: text,//主标题文本
+            link: '',//主标题文本超链接
+            subtext: subtext,//副标题文本
+            sublink: '',//副标题文本超链接
+            x: 'left',//水平安放位置
+            y: 'top'//垂直安放位置
+        };
+        var timeline = {
+            data: [
+                '2002-01-01', '2003-01-01', '2004-01-01', '2005-01-01', '2006-01-01',
+                '2007-01-01', '2008-01-01', '2009-01-01', '2010-01-01', '2011-01-01'
             ],
-            yAxis: [
-                {
-                    type: 'value'
+            label: {
+                formatter: function (s) {
+                    return s.slice(0, 4);
                 }
-            ],
-            series: temp_series
-        }
+            },
+            autoPlay: true,
+            playInterval: 1000
+        };
+        var toolbox = {
+            show: true,
+            orient: 'vertical',//布局方式'horizontal' | 'vertical'
+            x: 'right',//水平安放位置
+            y: 'top',//垂直安放位置
+            itemSize: 15,//工具箱icon大小，单位（px）
+            feature: {
+                mark: {
+                    show: true,
+                    title: {
+                        mark: '辅助线开关',
+                        markUndo: '删除辅助线',
+                        markClear: '清空辅助线'
+                    },
+                    lineStyle: {
+                        width: 2,
+                        color: '#1e90ff',
+                        type: 'dashed'
+                    }
+                },
+                dataZoom: {
+                    show: true,
+                    title: {
+                        dataZoom: '区域缩放',
+                        dataZoomReset: '区域缩放后退'
+                    }
+                },
+                dataView: {
+                    show: true,
+                    title: '数据视图',
+                    readOnly: false,
+                    lang: ['数据视图', '关闭', '刷新']
+                },
+                magicType: {
+                    show: true,
+                    title: {
+                        line: '折线图切换',
+                        bar: '柱形图切换',
+                        stack: '堆积',
+                        tiled: '平铺',
+                        force: '力导向布局图切换',
+                        chord: '和弦图切换',
+                        pie: '饼图切换',
+                        funnel: '漏斗图切换'
+                    },
+                    option: {
+                        // line: {...},
+                        // bar: {...},
+                        // stack: {...},
+                        // tiled: {...},
+                        // force: {...},
+                        // chord: {...},
+                        // pie: {...},
+                        // funnel: {...}
+                    },
+                    type: ['line', 'bar', 'stack', 'tiled']
+                },
+                restore: {
+                    show: true,
+                    title: '还原'
+                },
+                saveAsImage: {
+                    show: true,
+                    title: '保存为图片',
+                    type: 'png',
+                    lang: ['点击保存']
+                }
+            }
+
+        };
+        var tooltip = {//默认显示
+            trigger: 'axis',//item,axis,
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'cross' | 'shadow' | 'none'(无)
+            }
+        };
+        var legend = {
+            data: series_name
+        };
+        var dataRange = {
+            show: true,
+            orient: 'vertical',
+            x: 'left',//水平安放位置
+            y: 'bottom',//垂直安放位置
+            min: 0,
+            max: 10
+        };
+        var dataZoom = {
+            show: true,
+            realtime: true,//是否实时显示
+            start: 0,//默认选择范围起始值（%）
+            end: 10//默认选择范围结束值（%）
+        };
+        var roamController = {
+            show: true,
+            x: 'right',
+            y: 'top',
+            width: 60,
+            height: 80,
+            mapTypeControl: {
+                'china': true
+            }
+        };
+        var xAxis = [
+            {
+                boundaryGap: true,//类目起始和结束两端空白策略
+                data: xAxis_data
+            }
+        ];
+        var yAxis = [
+            {
+                type: 'value'
+            }
+        ];
+        defaultOption = {
+            title: title,
+            timeline: timeline,
+            toolbox: toolbox,
+            tooltip: tooltip,
+            legend: legend,
+            dataRange: dataRange,
+            dataZoom: dataZoom,
+            roamController: roamController,
+            xAxis: xAxis,
+            yAxis: yAxis,
+            series: temp_series,
+            calculable: true//拖拽重计算
+        };
+        /*******************初步解析的数据*********************/
+        var chartData = {
+            title: title,
+            xAxis_data: xAxis_data,
+            series_name: series_name,
+            series_data: series_data
+        };
         switch (chartArea.type) {
             //*******************************标准柱状图*******************************
             case 'BasicBar':
                 var basicBarChart = new AllChartView.basicBarChartView;
-                basicBarChart.render(chartArea.id, option);
+                basicBarChart.render(chartArea.id, defaultOption);
                 //new BasicBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
                 break;
             //*******************************堆积柱状图*******************************
             case 'StackBar':
-                new StackBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new StackBarChartView().render(chartArea.id, defaultOption);
                 break;
             //*******************************温度计柱状图*******************************
             case 'ThermometerBar':
-                new ThermometerBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new ThermometerBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************组成柱状图*******************************
             case 'PartBar':
-                new PartBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new PartBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************阶梯柱状图*******************************
             case 'LadderBar':
-                new LadderBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new LadderBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
 
 
@@ -187,15 +288,15 @@ define(function (require, exports, module) {
 
             //*******************************标准折线图*******************************
             case 'BasicLine':
-                new BasicLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicLineChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************堆积折线图*******************************
             case 'StackLine':
-                new StackLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new StackLineChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************不等距折线图*******************************
             case 'UnEqualLine':
-                new UnEqualLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new UnEqualLineChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************时间轴折线图*******************************
             case 'TimeAxisLine':
@@ -215,7 +316,7 @@ define(function (require, exports, module) {
                     var pieItem = {
                         name: xAxis_data[i],
                         value: temp_data[i]
-                    }
+                    };
                     series_data.push(pieItem);
                 }
 
@@ -233,7 +334,7 @@ define(function (require, exports, module) {
                     var pieItem = {
                         name: xAxis_data[i],
                         value: temp_data[i]
-                    }
+                    };
                     series_data.push(pieItem);
                 }
 
@@ -251,7 +352,7 @@ define(function (require, exports, module) {
                     var pieItem = {
                         name: xAxis_data[i],
                         value: temp_data[i]
-                    }
+                    };
                     series_data.push(pieItem);
                 }
 
@@ -283,8 +384,19 @@ define(function (require, exports, module) {
 
             //*******************************标准散点图*******************************
             case 'BasicScatter':
-
                 new BasicScatterChartView().render(chartArea.id, data);
+                break;
+
+
+            //*******************************标准地图*******************************
+            case 'BasicMap':
+                new BasicMapChartView().render(chartArea.id, data);
+                break;
+
+
+            //*******************************仪表盘*******************************
+            case 'BasicBoard':
+                new BasicBoardChartView().render(chartArea.id, data);
                 break;
         }
 
