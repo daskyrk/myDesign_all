@@ -5,24 +5,18 @@ define(function (require, exports, module) {
 
     var multiHorizonBarChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, defaultOption, chartData) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var temp_series = new Array();
-            for (var i = 0; i < series_data.length; i++) {
+            var temp_series = [];
+            for (var i = 0; i < chartData.series_data.length; i++) {
                 var seriesItem = {
-                    name: series_name[i],
+                    name: chartData.series_name[i],
                     type: "bar",
                     stack: '总量',
-                    data: series_data[i]
-                }
+                    data: chartData.series_data[i]
+                };
                 temp_series.push(seriesItem);
             }
             var placeHoledStyle = {
@@ -45,11 +39,7 @@ define(function (require, exports, module) {
                 }
             };
             var option = {
-                title: {
-                    text: '多维条形图',
-                    subtext: 'From ExcelHome',
-                    sublink: 'http://e.weibo.com/1341556070/AiEscco0H'
-                },
+                title: defaultOption.title,
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {            // 坐标轴指示器，坐标轴触发有效
@@ -59,8 +49,7 @@ define(function (require, exports, module) {
                 },
                 legend: {
                     y: 55,
-                    //itemGap: document.getElementById('main').offsetWidth / 8,
-                    data: series_name
+                    data: chartData.series_name
                 },
                 toolbox: {
                     show: true,
@@ -88,25 +77,15 @@ define(function (require, exports, module) {
                     {
                         type: 'category',
                         splitLine: {show: false},
-                        data: xAxis_data
+                        data: chartData.xAxis_data
                     }
                 ],
                 series: temp_series
             };
 
-
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

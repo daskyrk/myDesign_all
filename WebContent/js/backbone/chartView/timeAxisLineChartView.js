@@ -5,26 +5,10 @@ define(function (require, exports, module) {
 
     var timeAxisLineChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
         render: function (chartAreaId, xAxis_data, series_name, series_data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var temp_series = new Array();
-            for (var i = 0; i < series_data.length; i++) {
-                var seriesItem = {
-                    name: series_name[i],
-                    type: "bar",
-                    stack: '总量',
-                    data: series_data[i]
-                }
-                temp_series.push(seriesItem);
-            }
             var option = {
                 title: {
                     text: '时间坐标折线图',
@@ -101,19 +85,12 @@ define(function (require, exports, module) {
                 ]
             };
 
+            console.log(option.series[0].data);
+
 
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

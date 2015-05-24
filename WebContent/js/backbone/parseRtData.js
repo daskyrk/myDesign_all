@@ -11,6 +11,7 @@ define(function (require, exports, module) {
     var ThermometerBarChartView = require("./chartView/thermometerBarChartView");
     var PartBarChartView = require("./chartView/partBarChartView");
     var LadderBarChartView = require("./chartView/ladderBarChartView");
+    var TimeAxisBarChartView = require("./chartView/timeAxisBarChartView");
 
     /************************条形图************************/
     var BasicHorizonBarChartView = require("./chartView/basicHorizonBarChartView");
@@ -262,27 +263,31 @@ define(function (require, exports, module) {
             case 'LadderBar':
                 new LadderBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
+            //*******************************时间轴柱状图*******************************
+            case 'TimeAxisBar':
+                new TimeAxisBarChartView().render(chartArea.id, defaultOption, data, chartData);
+                break;
 
 
             //*******************************标准条形图*******************************
             case 'BasicHorizonBar':
-                new BasicHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicHorizonBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************堆积条形图*******************************
             case 'StackHorizonBar':
-                new StackHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new StackHorizonBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************旋风条形图*******************************
             case 'WindHorizonBar':
-                new WindHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new WindHorizonBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************多维条形图*******************************
             case 'MultiHorizonBar':
-                new MultiHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new MultiHorizonBarChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************不等距条形图*******************************
             case 'UnEqualHorizonBar':
-                new UnEqualHorizonBarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new UnEqualHorizonBarChartView().render(chartArea.id, defaultOption, data);
                 break;
 
 
@@ -296,7 +301,7 @@ define(function (require, exports, module) {
                 break;
             //*******************************不等距折线图*******************************
             case 'UnEqualLine':
-                new UnEqualLineChartView().render(chartArea.id, defaultOption, chartData);
+                new UnEqualLineChartView().render(chartArea.id, defaultOption, data);
                 break;
             //*******************************时间轴折线图*******************************
             case 'TimeAxisLine':
@@ -384,7 +389,7 @@ define(function (require, exports, module) {
 
             //*******************************标准散点图*******************************
             case 'BasicScatter':
-                new BasicScatterChartView().render(chartArea.id, data);
+                new BasicScatterChartView().render(chartArea.id, defaultOption, data);
                 break;
 
 

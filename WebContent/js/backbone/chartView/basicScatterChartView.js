@@ -5,17 +5,11 @@ define(function (require, exports, module) {
 
     var basicScatterChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, data) {
+        render: function (chartAreaId, defaultOption, data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var seriesNum = Math.ceil(data.length / 2);//横纵轴算一组，有几组数据
+            var seriesNum = Math.floor(data.length / 2);//横纵轴算一组，有几组数据
             var maxLength = 0;//最长的一组数据的长度
             var legend = [];
             var seriesData = [];
@@ -37,10 +31,7 @@ define(function (require, exports, module) {
                 seriesData.push(seriesItem);
             }
             var option = {
-                title: {
-                    text: '男性女性身高体重分布',
-                    subtext: '抽样调查来自: Heinz  2003'
-                },
+                title: defaultOption.title,
                 tooltip: {
                     trigger: 'axis',
                     showDelay: 0,
@@ -122,15 +113,6 @@ define(function (require, exports, module) {
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

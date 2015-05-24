@@ -48,7 +48,7 @@ define(function (require, exports, module) {
                         data: temp_series_data
                     },
                     {
-                        name: '生活费',
+                        name: chartData.series_name[0],
                         type: 'bar',
                         stack: '总量',
                         itemStyle: {normal: {label: {show: true, position: 'inside'}}},

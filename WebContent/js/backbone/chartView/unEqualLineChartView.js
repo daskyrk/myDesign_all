@@ -5,25 +5,36 @@ define(function (require, exports, module) {
 
     var unEqualLineChartView = Backbone.View.extend({
 
-        render: function (chartAreaId, defaultOption, chartData) {
+        render: function (chartAreaId, defaultOption, data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var temp_series = [];
-            for (var i = 0; i < chartData.series_data.length; i++) {
-                var seriesItem = {
-                    name: chartData.series_name[i],
-                    type: "bar",
-                    stack: '总量',
-                    data: chartData.series_data[i]
-                };
-                temp_series.push(seriesItem);
+            var seriesNum = Math.floor(data.length / 2);//横纵轴算一组，有几组数据
+            var maxLength = 0;//最长的一组数据的长度
+            var legend = [];
+            var seriesData = [];
+            for (var i = 0; i < data.length; i++) {
+                maxLength = maxLength > data[i].length ? maxLength : data[i].length;
             }
+            for (var i = 0; i < seriesNum; i++) {
+                if (data[i * 2][0] != "标题") {
+                    legend.push(data[i * 2][0]);
+                }
+            }
+            for (var j = 0; j < seriesNum; j++) {
+                var seriesItem = [];
+                for (var i = 2; i < maxLength; i++) {
+                    var temp = [];//每一个数据组
+                    if (data[2 * j][i] == null)break;
+                    temp.push(data[2 * j][i]);//数据组横轴值
+                    temp.push(data[2 * j + 1][i]);//数据组纵轴值
+                    seriesItem.push(temp);
+                }
+                seriesData.push(seriesItem);
+            }
+
             var option = {
-                title: {
-                    text: '双数值轴折线',
-                    subtext: '纯属虚构'
-                },
+                title: defaultOption.title,
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -41,10 +52,11 @@ define(function (require, exports, module) {
                     }
                 },
                 legend: {
-                    data: ['数据1', '数据2']
+                    data: legend
                 },
                 toolbox: {
                     show: true,
+                    orient: 'vertical',
                     feature: {
                         mark: {show: true},
                         dataZoom: {show: true},
@@ -72,11 +84,9 @@ define(function (require, exports, module) {
                 ],
                 series: [
                     {
-                        name: '数据1',
+                        name: legend[0],
                         type: 'line',
-                        data: [
-                            [1.5, 10], [5, 7], [8, 8], [12, 6], [11, 12], [16, 9], [14, 6], [17, 4], [19, 9]
-                        ],
+                        data: seriesData[0],
                         markPoint: {
                             data: [
                                 // 纵轴，默认
@@ -123,15 +133,12 @@ define(function (require, exports, module) {
                         }
                     },
                     {
-                        name: '数据2',
+                        name: legend[1],
                         type: 'line',
-                        data: [
-                            [1, 2], [2, 3], [4, 2], [7, 5], [11, 2], [18, 3]
-                        ]
+                        data: seriesData[1]
                     }
                 ]
             };
-
 
             //为echarts对象加载数据
             myChart.setOption(option);
