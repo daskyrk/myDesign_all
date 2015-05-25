@@ -5,35 +5,28 @@ define(function (require, exports, module) {
 
     var stackAreaChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, defaultOption, chartData) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var temp_series = new Array();
-            for (var i = 0; i < series_data.length; i++) {
+            var temp_series = [];
+            for (var i = 0; i < chartData.series_data.length; i++) {
                 var seriesItem = {
-                    name: series_name[i],
+                    name: chartData.series_name[i],
                     type: "line",
                     stack: '总量',
                     smooth: true,
                     itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data: series_data[i]
-                }
+                    data: chartData.series_data[i]
+                };
                 temp_series.push(seriesItem);
             }
             var option = {
+                title: defaultOption.title,
                 tooltip: {
                     trigger: 'axis'
                 },
-                legend: {
-                    data: series_name
-                },
+                legend: defaultOption.legend,
                 toolbox: {
                     show: true,
                     orient: 'vertical',
@@ -50,30 +43,16 @@ define(function (require, exports, module) {
                     {
                         type: 'category',
                         boundaryGap: false,
-                        data: xAxis_data
+                        data: chartData.xAxis_data
                     }
                 ],
-                yAxis: [
-                    {
-                        type: 'value'
-                    }
-                ],
+                yAxis: defaultOption.yAxis,
                 series: temp_series
             };
-
 
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

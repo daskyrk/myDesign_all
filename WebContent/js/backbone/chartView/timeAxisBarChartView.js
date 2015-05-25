@@ -178,9 +178,7 @@ define(function (require, exports, module) {
 
             for (var i = 1; i < addData.length; i++) {//因为第一组数据已经存在，所以从1开始
                 option.options.push(addData[i]);
-                console.log(option.options);
             }
-
 
             //为echarts对象加载数据
             myChart.setOption(option);

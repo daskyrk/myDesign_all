@@ -5,26 +5,37 @@ define(function (require, exports, module) {
 
     var basicRingChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var temp_series = new Array();
-            for (var i = 0; i < series_data.length; i++) {
-                var seriesItem = {
-                    "name": series_name[i],
-                    "type": "bar",
-                    "data": series_data[i]
-                }
-                temp_series.push(seriesItem);
+            //标题
+            var length = data.length - 1, title = '', subtitle = '';
+            if (data[length][0] == '标题') {
+                title = data[length][1];
+                data[length][2] == null ? subtitle = '' : subtitle = data[length][2];
+                length--;
             }
+            //内容
+            var names = data[0].slice(1), values = data[1].slice(1), series_data = [];
+            var maxValue = 10;
+            for (var i = 0; i < names.length; i++) {
+                var pieItem = {
+                    name: names[i],
+                    value: values[i]
+                };
+                series_data.push(pieItem);
+                maxValue = maxValue > values[i] ? maxValue : values[i];
+            }
+
             var option = {
+                title: {
+                    show: true,
+                    text: title,//主标题文本
+                    subtext: subtitle,//副标题文本
+                    x: 'center',//水平安放位置
+                    y: 'top'//垂直安放位置
+                },
                 tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -32,10 +43,11 @@ define(function (require, exports, module) {
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: xAxis_data
+                    data: names
                 },
                 toolbox: {
                     show: true,
+                    orient: 'vertical',
                     feature: {
                         mark: {show: true},
                         dataView: {show: true, readOnly: false},
@@ -47,7 +59,7 @@ define(function (require, exports, module) {
                                     x: '25%',
                                     width: '50%',
                                     funnelAlign: 'center',
-                                    max: 1548
+                                    max: maxValue
                                 }
                             }
                         },
@@ -58,7 +70,7 @@ define(function (require, exports, module) {
                 calculable: true,
                 series: [
                     {
-                        name: '访问来源',
+                        name: data[0][0],
                         type: 'pie',
                         radius: ['50%', '70%'],
                         itemStyle: {
@@ -86,21 +98,10 @@ define(function (require, exports, module) {
                 ]
             };
 
-
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
-
     });
 
     module.exports = basicRingChartView;

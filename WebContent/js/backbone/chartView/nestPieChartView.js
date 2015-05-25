@@ -5,17 +5,47 @@ define(function (require, exports, module) {
 
     var nestPieChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
+            var length = data.length - 1, title = '', subtitle = '';
+            if (data[length][0] == '标题') {
+                title = data[length][1];
+                data[length][2] == null ? subtitle = '' : subtitle = data[length][2];
+                length--;
+            }
+            var center_series = [], outer_series = [], legend_data = [], inner_maxValue = 10, outer_maxValue = 10;
+            for (var i = 0; i < length; i += 2) {
+                var sum = 0;
+                for (var j = 1; j < data[i].length; j++) {
+                    if (data[i][j] != null) {
+                        //外围每一块
+                        var outer_item = {
+                            name: data[i][j],
+                            value: data[i + 1][j]
+                        };
+                        outer_series.push(outer_item);
+                        sum += parseInt(data[i + 1][j]);
+                        legend_data.push(data[i][j]);
+                        outer_maxValue = outer_maxValue > outer_item.value ? outer_maxValue : outer_item.value;
+                    }
+                }
+                //中心部分每一块
+                var center_item = {
+                    name: data[i][0],
+                    value: sum
+                };
+                center_series.push(center_item);
+                inner_maxValue = inner_maxValue > sum ? inner_maxValue : sum;
+            }
+
             var option = {
+                title: {
+                    show: true,
+                    text: title,//主标题文本
+                    subtext: subtitle//副标题文本
+                },
                 tooltip: {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -23,7 +53,7 @@ define(function (require, exports, module) {
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: ['直达', '营销广告', '搜索引擎', '邮件营销', '联盟广告', '视频广告', '百度', '谷歌', '必应', '其他']
+                    data: legend_data
                 },
                 toolbox: {
                     show: true,
@@ -44,13 +74,13 @@ define(function (require, exports, module) {
                         name: '访问来源',
                         type: 'pie',
                         selectedMode: 'single',
-                        radius: [0, 70],
+                        radius: [0, 60],
 
                         // for funnel
                         x: '20%',
-                        width: '40%',
+                        width: '30%',
                         funnelAlign: 'right',
-                        max: 1548,
+                        max: inner_maxValue,
 
                         itemStyle: {
                             normal: {
@@ -62,33 +92,19 @@ define(function (require, exports, module) {
                                 }
                             }
                         },
-                        data: [
-                            {value: 335, name: '直达'},
-                            {value: 679, name: '营销广告'},
-                            {value: 1548, name: '搜索引擎', selected: true}
-                        ]
+                        data: center_series
                     },
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: [100, 140],
+                        radius: [80, 110],
 
                         // for funnel
-                        x: '60%',
-                        width: '35%',
+                        x: '50%',
+                        width: '10%',
                         funnelAlign: 'left',
-                        max: 1048,
-
-                        data: [
-                            {value: 335, name: '直达'},
-                            {value: 310, name: '邮件营销'},
-                            {value: 234, name: '联盟广告'},
-                            {value: 135, name: '视频广告'},
-                            {value: 1048, name: '百度'},
-                            {value: 251, name: '谷歌'},
-                            {value: 147, name: '必应'},
-                            {value: 102, name: '其他'}
-                        ]
+                        max: outer_maxValue,
+                        data: outer_series
                     }
                 ]
             };
@@ -109,19 +125,9 @@ define(function (require, exports, module) {
             //    document.getElementById('wrong-message').innerHTML = str;
             //})
 
-
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

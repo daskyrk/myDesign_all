@@ -5,21 +5,35 @@ define(function (require, exports, module) {
 
     var basicPieChartView = Backbone.View.extend({
 
-        id: "",
-
-        init: function () {
-            //this.id = "barChart" + $("div[id^='chart']").length;
-        },
-
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, data) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var option = {
+            //标题
+            var length = data.length - 1, title = '', subtitle = '';
+            if (data[length][0] == '标题') {
+                title = data[length][1];
+                data[length][2] == null ? subtitle = '' : subtitle = data[length][2];
+                length--;
+            }
+            //内容
+            var names = data[0].slice(1), values = data[1].slice(1), series_data = [];
+            var maxValue = 10;
+            for (var i = 0; i < names.length; i++) {
+                var pieItem = {
+                    name: names[i],
+                    value: values[i]
+                };
+                series_data.push(pieItem);
+                maxValue = maxValue > values[i] ? maxValue : values[i];
+            }
+            var option = { 
                 title: {
-                    text: '某站点用户访问来源',
-                    subtext: '纯属虚构',
-                    x: 'center'
+                    show: true,
+                    text: title,//主标题文本
+                    subtext: subtitle,//副标题文本
+                    x: 'center',//水平安放位置
+                    y: 'top'//垂直安放位置
                 },
                 tooltip: {
                     trigger: 'item',
@@ -28,7 +42,8 @@ define(function (require, exports, module) {
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: xAxis_data
+                    y: 'center',
+                    data: names
                 },
                 toolbox: {
                     show: true,
@@ -44,7 +59,7 @@ define(function (require, exports, module) {
                                     x: '25%',
                                     width: '50%',
                                     funnelAlign: 'left',
-                                    max: 1548
+                                    max: maxValue
                                 }
                             }
                         },
@@ -55,10 +70,10 @@ define(function (require, exports, module) {
                 calculable: true,
                 series: [
                     {
-                        name: series_name,
+                        name: data[0][0],
                         type: 'pie',
                         radius: '55%',
-                        center: ['50%', '60%'],
+                        center: ['50%', '50%'],
                         data: series_data
                     }
                 ]
@@ -67,15 +82,6 @@ define(function (require, exports, module) {
             //为echarts对象加载数据
             myChart.setOption(option);
             window.charts.push(myChart);
-            //return this;
-        },
-
-        events: {
-//            "click $('div[id^=\'chart\']:last')[0]": "addNew"
-        },
-
-        addNew: function () {//新增图表
-            alert('new');
         }
 
     });

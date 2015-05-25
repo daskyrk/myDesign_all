@@ -3,7 +3,7 @@
  */
 define(function (require, exports, module) {
 
-    var basicRadarChartView = Backbone.View.extend({
+    var multiRadarChartView = Backbone.View.extend({
 
         render: function (chartAreaId, chartData) {
             //基于准备好的dom，初始化echarts图表
@@ -28,14 +28,19 @@ define(function (require, exports, module) {
                 itemMax.push(Math.max.apply(null, temp));
                 var indicator_item = {
                     text: chartData.xAxis_data[i],
-                    max: itemMax[i] * 1.2
+                    max: itemMax[i] * 1.1
                 };
                 indicator_data.push(indicator_item);
             }
             var option = {
+                color: (function () {
+                    var zrColor = require('ref/zrender/color');
+                    return zrColor.getStepColors('yellow', 'red', series_data.length);
+                })(),
                 title: chartData.title,
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,250,0.2)'
                 },
                 legend: {
                     orient: 'vertical',
@@ -46,6 +51,7 @@ define(function (require, exports, module) {
                 toolbox: {
                     show: true,
                     orient: 'vertical',
+                    y: 'center',
                     feature: {
                         mark: {show: true},
                         dataView: {show: true, readOnly: false},
@@ -55,17 +61,39 @@ define(function (require, exports, module) {
                 },
                 polar: [
                     {
-                        indicator: indicator_data
+                        indicator: indicator_data,
+                        center: ['65%', 150],
+                        radius: 120
                     }
                 ],
-                calculable: true,
-                series: [
-                    {
-                        name: chartData.title,
-                        type: 'radar',
-                        data: series_data
+                calculable: false,
+                series: (function () {
+                    var series = [];
+                    for (var i = 0; i < series_data.length; i++) {
+                        series.push({
+                            name: chartData.title,
+                            type: 'radar',
+                            symbol: 'none',
+                            itemStyle: {
+                                normal: {
+                                    lineStyle: {
+                                        width: 1
+                                    }
+                                },
+                                emphasis: {
+                                    areaStyle: {color: 'rgba(0,250,0,0.3)'}
+                                }
+                            },
+                            data: [
+                                {
+                                    value: series_data[i].value,
+                                    name: series_data[i].name
+                                }
+                            ]
+                        })
                     }
-                ]
+                    return series;
+                })()
             };
 
             //为echarts对象加载数据
@@ -75,5 +103,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = basicRadarChartView;
+    module.exports = multiRadarChartView;
 });

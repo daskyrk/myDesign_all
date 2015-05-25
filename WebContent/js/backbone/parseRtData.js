@@ -38,6 +38,7 @@ define(function (require, exports, module) {
     /************************雷达图************************/
     var BasicRadarChartView = require("./chartView/basicRadarChartView");
     var FillRadarChartView = require("./chartView/fillRadarChartView");
+    var MultiRadarChartView = require("./chartView/multiRadarChartView");
 
     /************************散点图************************/
     var BasicScatterChartView = require("./chartView/basicScatterChartView");
@@ -69,7 +70,7 @@ define(function (require, exports, module) {
             }
         }
 
-        var temp_series = [];
+        var default_series = [];
         for (var i = 0; i < series_data.length; i++) {
             var seriesItem = {
                 name: series_name[i],
@@ -78,7 +79,7 @@ define(function (require, exports, module) {
                 itemStyle: {normal: {areaStyle: {type: 'default'}}},
                 data: series_data[i]
             };
-            temp_series.push(seriesItem);
+            default_series.push(seriesItem);
         }
 
 
@@ -181,7 +182,7 @@ define(function (require, exports, module) {
                 type: 'shadow'        // 默认为直线，可选为：'line' | 'cross' | 'shadow' | 'none'(无)
             }
         };
-        var legend = {
+        var legend = {//默认位置顶部水平正中
             data: series_name
         };
         var dataRange = {
@@ -230,7 +231,7 @@ define(function (require, exports, module) {
             roamController: roamController,
             xAxis: xAxis,
             yAxis: yAxis,
-            series: temp_series,
+            series: default_series,
             calculable: true//拖拽重计算
         };
         /*******************初步解析的数据*********************/
@@ -305,85 +306,45 @@ define(function (require, exports, module) {
                 break;
             //*******************************时间轴折线图*******************************
             case 'TimeAxisLine':
-                new TimeAxisLineChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new TimeAxisLineChartView().render(chartArea.id, defaultOption, chartData);
                 break;
 
 
             //*******************************标准饼图*******************************
             case 'BasicPie':
-                series_data = [];
-                var temp_data;
-
-                xAxis_data = data[0].slice(1);
-                series_name = data[0][0];
-                temp_data = data[1].slice(1);
-                for (var i = 0; i < temp_data.length; i++) {
-                    var pieItem = {
-                        name: xAxis_data[i],
-                        value: temp_data[i]
-                    };
-                    series_data.push(pieItem);
-                }
-
-                new BasicPieChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicPieChartView().render(chartArea.id, data);
                 break;
             //*******************************嵌套饼图*******************************
             case 'NestPie':
-                series_data = [];
-                temp_data = '';
-
-                xAxis_data = data[0].slice(1);
-                series_name = data[0][0];
-                temp_data = data[1].slice(1);
-                for (var i = 0; i < temp_data.length; i++) {
-                    var pieItem = {
-                        name: xAxis_data[i],
-                        value: temp_data[i]
-                    };
-                    series_data.push(pieItem);
-                }
-
-                new NestPieChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new NestPieChartView().render(chartArea.id, data);
                 break;
             //*******************************标准环形图*******************************
             case 'BasicRing':
-                series_data = [];
-                temp_data = '';
-
-                xAxis_data = data[0].slice(1);
-                series_name = data[0][0];
-                temp_data = data[1].slice(1);
-                for (var i = 0; i < temp_data.length; i++) {
-                    var pieItem = {
-                        name: xAxis_data[i],
-                        value: temp_data[i]
-                    };
-                    series_data.push(pieItem);
-                }
-
-                new BasicRingChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicRingChartView().render(chartArea.id, data);
                 break;
 
 
             //*******************************标准面积图*******************************
             case 'BasicArea':
-                var basicAreaChart = new AllChartView.basicAreaChartView;
-                //basicAreaChart.render(chartArea.id, option);
-                new BasicAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicAreaChartView().render(chartArea.id, defaultOption, chartData);
                 break;
             //*******************************堆积面积图*******************************
             case 'StackArea':
-                new StackAreaChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new StackAreaChartView().render(chartArea.id, defaultOption, chartData);
                 break;
 
 
             //*******************************标准雷达图*******************************
             case 'BasicRadar':
-                new BasicRadarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new BasicRadarChartView().render(chartArea.id, chartData);
                 break;
             //*******************************填充雷达图*******************************
             case 'FillRadar':
-                new FillRadarChartView().render(chartArea.id, xAxis_data, series_name, series_data);
+                new FillRadarChartView().render(chartArea.id, chartData);
+                break;
+            //*******************************填充雷达图*******************************
+            case 'MultiRadar':
+                new MultiRadarChartView().render(chartArea.id, chartData);
                 break;
 
 

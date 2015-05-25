@@ -396,7 +396,7 @@
                 <!-- END TODO DROPDOWN -->
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                <li class="dropdown dropdown-user">
+                <li class="dropdown dropdown-user" data-step="11" data-intro="这里是当前用户<br/>可选择退出登录或锁屏保护">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                        data-close-others="true">
                         <img alt="" class="img-circle" src="./assets/global/img/portrait.png"/>
@@ -471,7 +471,7 @@
                 <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
                 <li class="sidebar-toggler-wrapper">
                     <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-                    <div class="sidebar-toggler" data-step="9" data-intro="点击这里可以隐藏左侧栏">
+                    <div class="sidebar-toggler" data-step="10" data-intro="点击这里可以隐藏左侧栏">
                     </div>
                     <!-- END SIDEBAR TOGGLER BUTTON -->
                 </li>
@@ -633,7 +633,7 @@
                                 标准饼图</a>
                         </li>
                         <li>
-                            <a id="NestPie" href="#">
+                            <a id="addChart_NestPie" href="#">
                                 嵌套饼图</a>
                         </li>
                         <li>
@@ -676,10 +676,10 @@
                             <a id="addChart_FillRadar" href="#">
                                 标准填充雷达图</a>
                         </li>
-                        <!--<li>-->
-                        <!--<a href="#">-->
-                        <!--多雷达图</a>-->
-                        <!--</li>-->
+                        <li>
+                            <a id="addChart_MultiRadar" href="#">
+                                多雷达图</a>
+                        </li>
                         <!--<li>-->
                         <!--<a href="#">-->
                         <!--虫洞</a>-->
@@ -994,7 +994,7 @@
             <div id="sortable_portlets">
                 <div id="intro_example" class="col-md-6 col-sm-6 sortable float-left">
                     <div class="portlet box blue-steel" data-step="3" data-intro="这里是新增的图表区域" data-position='left'>
-                        <div class="portlet-title">
+                        <div class="portlet-title" data-step="9" data-intro="点击标题栏可拖拽排序">
                             <div class="caption" data-step="5" data-intro="这里是图表区域的类型">
                                 <i class="fa fa-bar-chart-o"></i>BasicBar
                             </div>
