@@ -18,15 +18,19 @@
     </servlet>
     <servlet>
         <servlet-name>login</servlet-name>
-        <jsp-file>/WEB-INF/admin/login_soft.html</jsp-file>
+        <servlet-class>com.lijun.redirect.Redirect</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>lock</servlet-name>
         <jsp-file>/WEB-INF/admin/lock.html</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>logout</servlet-name>
+        <jsp-file>/WEB-INF/admin/login_soft.html</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>index</servlet-name>
-        <servlet-class>com.lijun.redirect.Redirect</servlet-class>
+        <jsp-file>/WEB-INF/admin/index.html</jsp-file>
     </servlet>
 
 
@@ -48,11 +52,14 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>/WEB-INF/admin/index.html</welcome-file>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>/WEB-INF/admin/login_soft.html</welcome-file>
     </welcome-file-list>
 </web-app>

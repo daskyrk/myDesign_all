@@ -45,13 +45,18 @@
             },
 
             submitHandler: function (form) {
+                var username = $("#username");
                 var password = $("#password");
+                if (username.val() != "lijun") {
+                    username.parent("div").append("<span id='password-error' class='help-block'>用户名不正确</span>")
+                        .closest('.form-group').addClass('has-error');
+                    return false;
+                }
                 if (password.val() != "123") {
                     password.parent("div").append("<span id='password-error' class='help-block'>密码不正确</span>")
                         .closest('.form-group').addClass('has-error');
                     return false;
                 }
-                ;
                 form.submit();
             }
         });
@@ -59,19 +64,24 @@
         $('.login-form input').keypress(function (e) {
             if (e.which == 13) {
                 if ($('.login-form').validate().form()) {
+                    var username = $("#username");
                     var password = $("#password");
+                    if (username.val() != "lijun") {
+                        username.parent("div").append("<span id='password-error' class='help-block'>用户名不正确</span>")
+                            .closest('.form-group').addClass('has-error');
+                        return false;
+                    }
                     if (password.val() != "123") {
                         password.parent("div").append("<span id='password-error' class='help-block'>密码不正确</span>")
                             .closest('.form-group').addClass('has-error');
                         return false;
                     }
-                    ;
                     $('.login-form').submit();
                 }
                 return false;
             }
         });
-    }
+    };
 
     var handleForgetPassword = function () {
         $('.forget-form').validate({
@@ -134,7 +144,7 @@
             jQuery('.forget-form').hide();
         });
 
-    }
+    };
 
     var handleRegister = function () {
 
@@ -252,7 +262,7 @@
             jQuery('.login-form').show();
             jQuery('.register-form').hide();
         });
-    }
+    };
 
     return {
         //main function to initiate the module

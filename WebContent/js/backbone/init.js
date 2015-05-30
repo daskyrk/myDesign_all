@@ -113,9 +113,9 @@ define(function (require, exports, module) {
         PortletDraggable.init();
 
         //刷新、关闭页面确认
-        //window.onbeforeunload = function () {
-        //    return "请注意：离开后会导致当前数据丢失"
-        //}
+        window.onbeforeunload = function () {
+            return "请注意：离开后会导致当前数据丢失"
+        }
 
     });
 

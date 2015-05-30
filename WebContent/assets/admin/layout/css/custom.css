@@ -151,3 +151,7 @@ Change Quick Sidebar Width
 .customDefault {
     font-size: 14px;
 }
+
+h1 .redTitle {
+    color: red;
+}
