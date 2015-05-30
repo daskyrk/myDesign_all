@@ -16,15 +16,6 @@ define(function (require, exports, module) {
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
-        },
-
-        events: {
-            "click #closeMask": "removeMask"
-        },
-
-        removeMask: function () {
-            var maskDiv = $("#maskDiv");
-            maskDiv.remove();
         }
 
     });
