@@ -89,6 +89,9 @@ define(function (require, exports, module) {
         $("#searchBtn").click(function () {
             serarchMenu();
         });
+        $("#searchMenu").blur(function () {
+            serarchMenu();
+        });
         //菜单搜索按钮回车键响应
         $("#searchMenu").focus().keydown(function (event) {
             switch (event.keyCode) {
@@ -111,6 +114,23 @@ define(function (require, exports, module) {
 
         //拖拽排序
         PortletDraggable.init();
+
+        //点击锁屏
+        $("#lock").click(function () {
+            $("#lockpage").show();
+        });
+
+        //锁屏页面输入框
+        $("#password").css({"border": "2px solid transparent"});
+        //验证锁屏密码
+        $("#openLock").click(function () {
+            if ($("#password").val() == "123") {
+                $("#lockpage").fadeOut(600);
+            } else {
+                $("#tip").text("密码不正确");
+                $("#password").css({"border": "2px solid red"});
+            }
+        });
 
         //刷新、关闭页面确认
         window.onbeforeunload = function () {
@@ -192,7 +212,6 @@ define(function (require, exports, module) {
             }
         }
     }
-
 
     module.exports = init;
 

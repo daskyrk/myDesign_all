@@ -27,6 +27,7 @@
     <link href="./css/introjs.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+    <link href="./assets/admin/pages/css/lock.css" rel="stylesheet" type="text/css"/>
     <!-- <link href="./assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
     <link href="./assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
     <link href="./assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/> -->
@@ -428,7 +429,7 @@
                         <li class="divider">
                         </li>
                         <li>
-                            <a href="lock">
+                            <a id="lock" href="#">
                                 <i class="icon-lock"></i> Lock Screen </a>
                         </li>
                         <li>
@@ -1047,6 +1048,32 @@
         </div>
     </div>
     <!-- END FOOTER -->
+    <div id="lockpage">
+        <div class="page-body">
+            <div class="lock-head">
+                Locked
+            </div>
+            <div class="lock-body">
+                <div class="pull-left lock-avatar-block">
+                    <img src="./assets/global/img/portrait.png" class="lock-avatar">
+                </div>
+                <div id="login_form" class="lock-form pull-left">
+                    <h4>Li Jun</h4>
+
+                    <div class="form-group">
+                        <input id="password" class="form-control placeholder-no-fix" type="password" autocomplete="off"
+                               placeholder="Password" name="password"/>
+                    </div>
+                    <div class="form-actions">
+                        <button id="openLock" class="btn btn-success uppercase">Login</button>
+                    </div>
+                </div>
+            </div>
+            <div class="lock-bottom">
+                <a id="tip" href="">password is required</a>
+            </div>
+        </div>
+    </div>
     <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
     <!-- BEGIN CORE PLUGINS -->
     <!--[if lt IE 9]>
