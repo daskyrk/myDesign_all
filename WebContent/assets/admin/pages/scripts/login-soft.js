@@ -67,7 +67,7 @@
                     var username = $("#username");
                     var password = $("#password");
                     if (username.val() != "lijun") {
-                        username.parent("div").append("<span id='password-error' class='help-block'>用户名不正确</span>")
+                        username.parent("div").append("<span id='password-error' class='help-block'>用户名不存在</span>")
                             .closest('.form-group').addClass('has-error');
                         return false;
                     }
