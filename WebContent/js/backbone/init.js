@@ -91,13 +91,13 @@ define(function (require, exports, module) {
         });
         $("#searchMenu").blur(function () {
             serarchMenu();
-        });
-        //菜单搜索按钮回车键响应
-        $("#searchMenu").focus().keydown(function (event) {
-            switch (event.keyCode) {
-                case 13:
-                    serarchMenu();
-            }
+        }).focus(function(){//菜单搜索按钮回车键响应
+            $(this).keydown(function (event) {
+                switch (event.keyCode) {
+                    case 13:
+                        serarchMenu();
+                }
+            });
         });
 
         /********************图表区域的图表选项点击响应********************/

@@ -1,29 +1,29 @@
 /**
- * Created by Jun on 2015/3/30.
+ * Created by Jun on 2015/5/4.
  */
 define(function (require, exports, module) {
 
-    var basicBarChartView = Backbone.View.extend({
+    var barAndLineChartView = Backbone.View.extend({
 
-        render: function (chartAreaId, xAxis_data, series_name, series_data) {
+        render: function (chartAreaId, defaultOption, chartData) {
             //基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById(chartAreaId), 'macarons');
 
-            var temp_series = new Array();
-            for (var i = 0; i < series_data.length; i++) {
+            var temp_series = [];
+            var dataLength = chartData.series_data.length;
+            for (var i = 0; i < dataLength; i++) {
                 var seriesItem = {
-                    "name": series_name[i],
-                    "type": "bar",
-                    "data": series_data[i]
-                }
+                    name: chartData.series_name[i],
+                    type: "bar",
+                    data: chartData.series_data[i]
+                };
                 temp_series.push(seriesItem);
             }
+            temp_series[dataLength - 1].type = "line";
+            temp_series[dataLength - 1].yAxisIndex = 1;
             var option = {
                 tooltip: {
-                    show: true
-                },
-                legend: {
-                    data: series_name
+                    trigger: 'axis'
                 },
                 toolbox: {
                     show: true,
@@ -36,13 +36,18 @@ define(function (require, exports, module) {
                         saveAsImage: {show: true}
                     }
                 },
+                calculable: true,
+                legend: {data: chartData.series_name},
                 xAxis: [
                     {
                         type: 'category',
-                        data: xAxis_data
+                        data: chartData.xAxis_data
                     }
                 ],
                 yAxis: [
+                    {
+                        type: 'value'
+                    },
                     {
                         type: 'value'
                     }
@@ -57,5 +62,5 @@ define(function (require, exports, module) {
 
     });
 
-    module.exports = basicBarChartView;
+    module.exports = barAndLineChartView;
 });

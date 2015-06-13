@@ -42,13 +42,18 @@ define(function (require, exports, module) {
 
     /************************散点图************************/
     var BasicScatterChartView = require("./chartView/basicScatterChartView");
+    var BubbleScatterChartView = require("./chartView/bubbleScatterChartView");
 
     /************************地图************************/
     var BasicMapChartView = require("./chartView/basicMapChartView");
-
+    var MigrateMapChartView = require("./chartView/migrateMapChartView");
 
     /************************仪表盘图************************/
     var BasicBoardChartView = require("./chartView/basicBoardChartView");
+
+    /************************混搭图************************/
+    var BarAndLineChartView = require("./chartView/barAndLineChartView");
+    var BarAndPieChartView = require("./chartView/barAndPieChartView");
 
 
     /**
@@ -352,17 +357,32 @@ define(function (require, exports, module) {
             case 'BasicScatter':
                 new BasicScatterChartView().render(chartArea.id, defaultOption, data);
                 break;
+            case 'BubbleScatter':
+                new BubbleScatterChartView().render(chartArea.id, defaultOption, data);
+                break;
 
 
             //*******************************标准地图*******************************
             case 'BasicMap':
                 new BasicMapChartView().render(chartArea.id, data);
                 break;
+            case 'MigrateMap':
+                new MigrateMapChartView().render(chartArea.id, data);
+                break;
 
 
             //*******************************仪表盘*******************************
             case 'BasicBoard':
                 new BasicBoardChartView().render(chartArea.id, data);
+                break;
+
+
+            //*******************************混搭图表*******************************
+            case 'BarAndLine':
+                new BarAndLineChartView().render(chartArea.id, data, chartData);
+                break;
+            case 'BarAndPie':
+                new BarAndPieChartView().render(chartArea.id, data, chartData);
                 break;
         }
 
