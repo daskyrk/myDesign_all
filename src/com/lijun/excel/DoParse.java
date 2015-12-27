@@ -41,13 +41,14 @@ public class DoParse extends HttpServlet {
         // read the 2003-2007 excel
         List<Object> list07 = new ReadExcel().readExcel(excel2003_2007);
         List<Object> rtJson07 = new ArrayList();
+        JSONArray jsonObj = JSONArray.fromObject(rtJson07);
         if (list07 != null) {
             for (Object column: list07) {
             	JSONArray jsonArray = JSONArray.fromObject(column);
             	rtJson07.add(jsonArray);
             }
+            jsonObj = JSONArray.fromObject(rtJson07);
         }
-        JSONArray jsonObj07 = JSONArray.fromObject(rtJson07);
         
         // read the 2010 excel
         List<Object> rtJson10 = new ArrayList();
@@ -57,9 +58,9 @@ public class DoParse extends HttpServlet {
             	JSONArray jsonArray = JSONArray.fromObject(column);
                 rtJson10.add(jsonArray);
             }
+        	jsonObj = JSONArray.fromObject(rtJson10);
         }
-        JSONArray jsonObj10 = JSONArray.fromObject(rtJson10);
-        return jsonObj07;
+        return jsonObj;
     }
 	
 	@Override
